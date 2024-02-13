@@ -2,7 +2,11 @@ import { createContext } from "react";
 
 import * as authApi from "../../../api/auth";
 import { useState } from "react";
-import { getToken, storeToken } from "../../../utilities/local-storage";
+import {
+  getToken,
+  removeToken,
+  storeToken,
+} from "../../../utilities/local-storage";
 import { useEffect } from "react";
 import { toast } from "react-toastify";
 
@@ -40,8 +44,13 @@ export default function AuthContextProvider({ children }) {
     storeToken(res.data.accessToken);
   };
 
+  const logout = async () => {
+    setAuthUser(null);
+    removeToken();
+  };
+
   return (
-    <AuthContext.Provider value={{ register, login, authUser }}>
+    <AuthContext.Provider value={{ register, login, authUser, logout }}>
       {children}
     </AuthContext.Provider>
   );

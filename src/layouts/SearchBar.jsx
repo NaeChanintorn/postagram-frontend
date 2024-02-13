@@ -11,6 +11,8 @@ import { useState } from "react";
 import SideBar from "./SideBar";
 import CreateModal from "../components/CreateModal";
 import FriendProfile from "../components/FriendProfile";
+import Dropdown from "../components/Dropdown";
+import useAuth from "../hooks/use-auth";
 
 const defaultClassName =
   "hover:cursor-pointer hover:bg-gray-100 flex justify-center items-center rounded-lg p-3 mx-3";
@@ -19,6 +21,9 @@ export default function SearchBar() {
   const [search, setSearch] = useState(true);
   const [input, setInput] = useState("");
   const [modal, setModal] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+
+  const { logout } = useAuth();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -73,10 +78,20 @@ export default function SearchBar() {
                 </div>
               </div>
             </div>
-            <div className={`mb-7 ${defaultClassName}`}>
-              <MoreIcon />
+            {/* MoreIcon */}
+            <div className="relative" onClick={() => setDropdown(!dropdown)}>
+              <div className={`mb-7 ${defaultClassName}`}>
+                <MoreIcon />
+              </div>
+              {dropdown && (
+                <Dropdown
+                  onClick={logout}
+                  extendClassName="left-3 -top-[3.75rem]"
+                />
+              )}
             </div>
           </div>
+          {/* --------------------------------------- */}
 
           {/* Search Popup Bar */}
           <div className="w-[20.5vw] h-screen border-r border-gray-300 rounded-2xl shadow-[8px_0px_20px_1px_#00000024]">

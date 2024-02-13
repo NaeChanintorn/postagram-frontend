@@ -6,10 +6,15 @@ import Avatar from "../components/Avatar";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
 import CreateModal from "../components/CreateModal";
+import Dropdown from "../components/Dropdown";
+import useAuth from "../hooks/use-auth";
 
 export default function SideBar() {
   const [search, setSearch] = useState(false);
   const [modal, setModal] = useState(false);
+  const [dropdown, setDropdown] = useState(false);
+
+  const { logout } = useAuth();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -69,7 +74,7 @@ export default function SideBar() {
               </Link>
             </div>
           </div>
-          <div className="mb-3">
+          <div className="mb-3 relative">
             <Topic
               symbol={
                 <>
@@ -77,7 +82,11 @@ export default function SideBar() {
                 </>
               }
               title="More"
+              onClick={() => setDropdown(!dropdown)}
             />
+            {dropdown && (
+              <Dropdown onClick={logout} extendClassName="left-4 -top-11" />
+            )}
           </div>
         </div>
       ) : (
