@@ -1,5 +1,8 @@
-import React from "react";
-
 export default function ProfilePage() {
-  return <div>ProfilePage</div>;
+  return (
+    <div>
+      <div className="text-center">ProfilePage</div>
+      <div className="h-[110vh]"></div>
+    </div>
+  );
 }

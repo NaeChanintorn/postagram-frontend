@@ -2,12 +2,11 @@ import { createBrowserRouter } from "react-router-dom";
 import LoginPage from "../pages/LoginPage";
 import RegisterPage from "../pages/RegisterPage";
 import { RouterProvider } from "react-router-dom";
-import SideBar from "../layouts/SideBar";
 import HomePage from "../pages/HomePage";
 import ProfilePage from "../pages/ProfilePage";
 import Redirected from "../features/auth/paths/Redirected";
 import ProtectedRoute from "../features/auth/paths/ProtectedRoute";
-import { Outlet } from "react-router-dom";
+import SetOutlet from "../components/SetOutlet";
 
 const router = createBrowserRouter([
   {
@@ -31,8 +30,7 @@ const router = createBrowserRouter([
 
     element: (
       <ProtectedRoute>
-        <SideBar />
-        <Outlet />
+        <SetOutlet />
       </ProtectedRoute>
     ),
     children: [
