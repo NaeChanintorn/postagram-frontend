@@ -1,5 +1,6 @@
 import { Slide, ToastContainer } from "react-toastify";
 import Router from "./routes/Router";
+import useAuth from "./hooks/use-auth";
 
 function App() {
   return (
@@ -7,7 +8,7 @@ function App() {
       <Router />
       <ToastContainer
         position="bottom-right"
-        autoClose={2 * 1000}
+        autoClose={3000}
         theme="colored"
         transition={Slide}
       />
