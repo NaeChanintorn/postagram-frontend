@@ -5,3 +5,8 @@ export default function Redirected({ children }) {
   const { authUser } = useAuth();
   return authUser ? <Navigate to="/" /> : children;
 }
+
+// export function RedirectedAfterRegister({ children }) {
+//   const { authUser } = useAuth();
+//   return authUser ? <Navigate to="/login" /> : children;
+// }

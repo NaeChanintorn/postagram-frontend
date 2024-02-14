@@ -9,10 +9,10 @@ import PostagramIcon, {
 import Avatar from "../components/Avatar";
 import { useState } from "react";
 import SideBar from "./SideBar";
-import CreateModal from "../components/CreateModal";
 import FriendProfile from "../components/FriendProfile";
 import Dropdown from "../components/Dropdown";
 import useAuth from "../hooks/use-auth";
+import { CreateModal } from "../components/Modal";
 
 const defaultClassName =
   "hover:cursor-pointer hover:bg-gray-100 flex justify-center items-center rounded-lg p-3 mx-3";

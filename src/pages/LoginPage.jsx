@@ -42,8 +42,8 @@ export default function LoginPage() {
     <div className="flex justify-center gap-52">
       {/* --------------- Left side ---------------  */}
       <div className="flex flex-col justify-center items-center min-h-screen gap-5 ">
-        <Postagram className="font-cur text-6xl bg-gradient-to-r from-purple-800 via-yellow-500 to-red-400 inline-block text-transparent bg-clip-text" />
-        <div className="text-3xl  text-gray-50 hover:text-gray-400 hover:duration-300">
+        <Postagram className="font-cur text-6xl bg-gradient-to-r from-purple-800 via-yellow-500 to-red-400 inline-block text-transparent bg-clip-text animate-fade animate-once animate-duration-2000 animate-delay-100 animate-ease-in animate-alternate " />
+        <div className="text-3xl text-gray-50 hover:text-gray-400 hover:duration-300">
           by NAENAECNT
         </div>
       </div>

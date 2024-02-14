@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
 
 export default function FriendProfile({
@@ -20,6 +21,28 @@ export default function FriendProfile({
       <button className="text-gray-600 font-bold text-lg mr-[1.5rem]">
         {symbol}
       </button>
+    </div>
+  );
+}
+
+export function SuggestedProfile({ userName, fisrtName, lastName }) {
+  return (
+    <div className="flex flex-row">
+      <Link to="/profile/:userId">
+        <Avatar extendClassName="w-[3rem] h-[3rem] hover:cursor-pointer" />
+      </Link>
+      <div className="flex flex-col mt-1 ml-3">
+        <Link
+          to="/profile/:userId"
+          className="text-sm font-semibold hover:cursor-pointer"
+        >
+          {userName}
+        </Link>
+        <div className="flex flex-row gap-1">
+          <h2 className="text-sm">{fisrtName}</h2>
+          <h2 className="text-sm">{lastName}</h2>
+        </div>
+      </div>
     </div>
   );
 }

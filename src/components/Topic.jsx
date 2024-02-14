@@ -6,7 +6,7 @@ export default function Topic({ symbol, title, onClick }) {
     >
       <div className="flex flex-row gap-5 mx-3">
         <div className="">{symbol}</div>
-        <div className="font-light group-hover:font-bold">{title}</div>
+        <div className="font-normal group-hover:font-bold">{title}</div>
       </div>
     </div>
   );

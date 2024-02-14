@@ -5,7 +5,7 @@ import { CreateIcon, HomeIcon, MoreIcon, SearchIcon } from "../icons/Icons";
 import Avatar from "../components/Avatar";
 import { useState } from "react";
 import SearchBar from "./SearchBar";
-import CreateModal from "../components/CreateModal";
+import { CreateModal } from "../components/Modal";
 import Dropdown from "../components/Dropdown";
 import useAuth from "../hooks/use-auth";
 
