@@ -13,44 +13,41 @@ import { toast } from "react-toastify";
 export const AuthContext = createContext();
 
 export default function AuthContextProvider({ children }) {
-  const [authUser, setAuthUser] = useState(null);
-  const [loading, setLoading] = useState(true);
+  const [userData, setUserData] = useState(null);
+  const [authenticated, setAuthenticated] = useState(getToken() ? true : null);
 
   useEffect(() => {
-    if (getToken()) {
-      authApi
-        .getMe()
-        .then((res) => {
-          setAuthUser(res.data.user);
-        })
-        .catch((err) => {
-          toast.error(err.response?.data.message);
-        })
-        .finally(() => setLoading(false));
-    } else {
-      setLoading(false);
+    if (authenticated) {
+      fetchAuthUser();
     }
-  }, []);
+  }, [authenticated]);
+
+  const fetchAuthUser = async () => {
+    const res = await authApi.getMe();
+    setUserData(res.data.user);
+  };
 
   const register = async (user) => {
     const res = await authApi.register(user);
-    setAuthUser(res.data.newUser);
     storeToken(res.data.accessToken);
+    setAuthenticated(true);
   };
 
   const login = async (credential) => {
     const res = await authApi.login(credential);
-    setAuthUser(res.data.user);
     storeToken(res.data.accessToken);
+    setAuthenticated(true);
   };
 
   const logout = async () => {
-    setAuthUser(null);
     removeToken();
+    setAuthenticated(null);
   };
 
   return (
-    <AuthContext.Provider value={{ register, login, authUser, logout }}>
+    <AuthContext.Provider
+      value={{ register, login, userData, logout, authenticated }}
+    >
       {children}
     </AuthContext.Provider>
   );
