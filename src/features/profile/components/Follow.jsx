@@ -1,19 +1,16 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { getAllFollow } from "../../../api/follow";
+import useProfile from "../hooks/use-profile";
 
-export default function Follow({ countFollower, countFollowing }) {
+export default function Follow({ following, follower }) {
   const { userId } = useParams();
   const [showFollow, setShowFollow] = useState(1);
-  const [follow, setFollow] = useState([]);
 
-  const following = follow.filter((el) => +el.followerId === +userId);
-  const follower = follow.filter((el) => +el.followingId === +userId);
-  const user = follow.filter;
+  // const user = follow.filter;
 
-  const showFollower = () => setShowFollow(1);
-  const showFollowing = () => setShowFollow(2);
+  // const showFollower = () => setShowFollow(1);
+  // const showFollowing = () => setShowFollow(2);
 
   // useEffect(async () => {
   //   try {
@@ -24,14 +21,18 @@ export default function Follow({ countFollower, countFollowing }) {
   //   }
   // }, [userId]);
 
+  // follow.map((el) => {
+  //   console.log(el.followingId);
+  // });
+
   return (
     <>
       <div className="flex flex-row gap-2">
-        <h1 className="font-medium">{follower.length}</h1>
-        {follower?.length > 1 ? <h1>followers</h1> : <h1>follower</h1>}
+        <h1 className="font-medium">{follower}</h1>
+        {follower > 1 ? <h1>followers</h1> : <h1>follower</h1>}
       </div>
       <div className="flex flex-row gap-2">
-        <h1 className="font-medium">{following?.length}</h1>
+        <h1 className="font-medium">{following}</h1>
         <h1>following</h1>
       </div>
     </>

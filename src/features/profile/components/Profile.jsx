@@ -11,22 +11,33 @@ import { EditProfileModal } from "./EditProfileModal";
 import Follow from "./Follow";
 
 const countPost = 4;
-const countFollower = 30;
-const countFollowing = 22;
 
 export default function Profile() {
   const [profile, setProfile] = useState({});
   const [editModal, setEditModal] = useState(false);
 
   const { userData } = useAuth();
+  const { follow, getFollowCount } = useProfile();
+
+  const following = follow.filter((el) => +el.followerId === +userData?.id);
+  const follower = follow.filter((el) => +el.followingId === +userData?.id);
+  // console.log(follower, following);
 
   useEffect(() => {
+    console.log(follow);
+    if (follow.length > 0) {
+      return;
+    }
     const fetchMe = async () => {
       const res = await getMe();
       setProfile(res.data);
     };
     fetchMe();
-  }, []);
+    if (userData) {
+      getFollowCount(userData.id);
+      // console.log(userData);
+    }
+  }, [userData, follow]);
 
   return (
     <div className="flex flex-row gap-32">
@@ -56,10 +67,7 @@ export default function Profile() {
             <h1 className="font-medium">{countPost}</h1>
             {countPost > 1 ? <h1>posts</h1> : <h1>post</h1>}
           </div>
-          <Follow
-            countFollower={countFollower}
-            countFollowing={countFollowing}
-          />
+          <Follow follower={follower.length} following={following.length} />
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex flex-row gap-1">

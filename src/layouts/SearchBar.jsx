@@ -117,7 +117,7 @@ export default function SearchBar() {
           {/* Search Popup Bar */}
           <div className="w-[20.5vw] h-screen border-r border-gray-300 rounded-2xl shadow-[8px_0px_20px_1px_#00000024]">
             {!input ? (
-              <div className="flex flex-col gap-4">
+              <form className="flex flex-col gap-4">
                 <div className="text-2xl font-medium my-6 ml-5">
                   <h1>Search</h1>
                 </div>
@@ -143,7 +143,7 @@ export default function SearchBar() {
                     Clear all
                   </h1>
                 </div>
-              </div>
+              </form>
             ) : (
               // When searching
 

@@ -8,17 +8,18 @@ export const ProfileContext = createContext();
 
 export default function ProfileContextProvider({ children }) {
   const [userProfile, setUserProfile] = useState({});
-  const [follow, setFollow] = useState();
+  const [follow, setFollow] = useState([]);
 
   const { authenticated } = useAuth();
   const { userId } = useParams();
 
-  const getAllFollow = async () => {
+  const getFollowCount = async (userId) => {
     const res = await followApi.getAllFollow(userId);
+    // console.log(res);
     setFollow(res.data.isFollow);
   };
 
-  const createFollow = async () => {
+  const createFollow = async (id) => {
     const res = await followApi.createFollow(id);
     setFollow(res.data);
   };
@@ -41,7 +42,7 @@ export default function ProfileContextProvider({ children }) {
 
   return (
     <ProfileContext.Provider
-      value={{ userProfile, getAllFollow, createFollow }}
+      value={{ follow, userProfile, getFollowCount, createFollow }}
     >
       {children}
     </ProfileContext.Provider>
