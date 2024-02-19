@@ -1,8 +1,10 @@
-import FriendProfile, { SuggestedProfile } from "../components/FriendProfile";
+import { SuggestedProfile } from "../components/FriendProfile";
 import useAuth from "../hooks/use-auth";
 
 export default function HomePage() {
   const { userData } = useAuth();
+  // console.log(userData);
+
   return (
     // width sidebar = 17.5 vw width searchbar = 24.5 vw
     <div className="overflow-auto flex flex-row w-[100vw] justify-between">
@@ -11,9 +13,10 @@ export default function HomePage() {
       {/* Profile and Suggested Users */}
       <div className="w-[30vw] mt-10 flex flex-col gap-8">
         <SuggestedProfile
-          userName={userData.userName}
-          fisrtName={userData.firstName}
-          lastName={userData.lastName}
+          src={userData?.profileImage}
+          userName={userData?.userName}
+          fisrtName={userData?.firstName}
+          lastName={userData?.lastName}
         />
         <h1 className="text-sm text-gray-500 font-medium ">
           Suggested for you

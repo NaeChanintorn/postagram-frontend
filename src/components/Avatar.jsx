@@ -1,9 +1,11 @@
-export default function Avatar({ profileImage, extendClassName }) {
+import profileImage from "../assets/profile.png";
+
+export default function Avatar({ extendClassName, src }) {
   return (
     <div
-      className={`bg-gray-300 w-[1.5rem] h-[1.5rem] rounded-full ${extendClassName}`}
+      className={`bg-gray-300 w-[1.5rem] h-[1.5rem] rounded-full overflow-hidden mx-auto flex  ${extendClassName}`}
     >
-      <div>{profileImage}</div>
+      <img src={src || profileImage} alt="user" />
     </div>
   );
 }

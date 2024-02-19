@@ -13,6 +13,9 @@ import FriendProfile from "../components/FriendProfile";
 import Dropdown from "../components/Dropdown";
 import useAuth from "../hooks/use-auth";
 import { CreateModal } from "../components/Modal";
+import * as searchApi from "../api/search";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 
 const defaultClassName =
   "hover:cursor-pointer hover:bg-gray-100 flex justify-center items-center rounded-lg p-3 mx-3";
@@ -23,7 +26,11 @@ export default function SearchBar() {
   const [modal, setModal] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
-  const { logout } = useAuth();
+  // search feature
+  const [profileImage, setProfileImage] = useState(null);
+  const [userName, setUserName] = useState(null);
+
+  const { logout, userData } = useAuth();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -35,6 +42,20 @@ export default function SearchBar() {
 
   const handleDeleteInput = (e) => {
     setInput("");
+  };
+
+  const searchByUserName = async (input) => {
+    console.log(input, "---------------------");
+    let res = await searchApi.searchUser(input);
+    console.log(res.data);
+    setProfileImage(res.data.profileImage);
+    setUserName(res.data.userName);
+  };
+
+  const handleClickSearch = (e) => {
+    e.preventDefault();
+    searchByUserName(input);
+    // console.log(input);
   };
 
   return (
@@ -73,7 +94,7 @@ export default function SearchBar() {
                 {/* ----------------------------------- */}
                 <div className={defaultClassName}>
                   <Link to="/profile/:userId">
-                    <Avatar />
+                    <Avatar src={userData?.profileImage} />
                   </Link>
                 </div>
               </div>
@@ -95,36 +116,74 @@ export default function SearchBar() {
 
           {/* Search Popup Bar */}
           <div className="w-[20.5vw] h-screen border-r border-gray-300 rounded-2xl shadow-[8px_0px_20px_1px_#00000024]">
-            <div className="flex flex-col gap-4">
-              <div className="text-2xl font-medium my-6 ml-5">
-                <h1>Search</h1>
+            {!input ? (
+              <div className="flex flex-col gap-4">
+                <div className="text-2xl font-medium my-6 ml-5">
+                  <h1>Search</h1>
+                </div>
+                <div className="relative mx-auto">
+                  <input
+                    type="text"
+                    placeholder="Search"
+                    className="bg-gray-100 font-light text-sm focus:outline-none px-3 py-3 w-[19vw] rounded-lg"
+                    value={input}
+                    onChange={handleChangeInput}
+                  />
+                  <button
+                    onClick={handleDeleteInput}
+                    className="absolute top-3 right-3 focus:outline-none"
+                  >
+                    <CloseIcon />
+                  </button>
+                </div>
+                <hr />
+                <div className="flex flex-row justify-around gap-52">
+                  <h1 className="font-medium text-sm">Recent</h1>
+                  <h1 className="font-medium text-sm text-blue-500 hover:cursor-pointer">
+                    Clear all
+                  </h1>
+                </div>
               </div>
-              <div className="relative mx-auto">
-                <input
-                  type="text"
-                  placeholder="Search"
-                  className="bg-gray-100 font-light text-sm focus:outline-none px-3 py-3 w-[19vw] rounded-lg"
-                  value={input}
-                  onChange={handleChangeInput}
-                />
-                <button
-                  onClick={handleDeleteInput}
-                  className="absolute top-3 right-3 focus:outline-none"
-                >
-                  <CloseIcon />
-                </button>
-              </div>
-              <hr />
-              <div className="flex flex-row justify-around gap-52">
-                <h1 className="font-medium text-sm">Recent</h1>
-                <h1 className="font-medium text-sm text-blue-500 hover:cursor-pointer">
-                  Clear all
-                </h1>
-              </div>
-              <FriendProfile name="John Doe" symbol="&#x2715;" />
-              <FriendProfile name="Jane Doe" symbol="&#x2715;" />
-              <FriendProfile name="John Ddsadasd" symbol="&#x2715;" />
-            </div>
+            ) : (
+              // When searching
+
+              <form
+                onSubmit={handleClickSearch}
+                className="flex flex-col gap-4"
+              >
+                <div className="text-2xl font-medium my-6 ml-5">
+                  <h1>Search</h1>
+                </div>
+                <div className="relative mx-auto">
+                  <input
+                    type="text"
+                    name="userName"
+                    placeholder="Search"
+                    className="bg-gray-100 font-light text-sm focus:outline-none px-3 py-3 w-[19vw] rounded-lg"
+                    value={input}
+                    onChange={handleChangeInput}
+                  />
+                  <button
+                    onClick={handleDeleteInput}
+                    className="absolute top-3 right-3 focus:outline-none"
+                  >
+                    <CloseIcon />
+                  </button>
+                </div>
+                <div className="flex flex-row justify-center m-3  ">
+                  <button className="font-normal text-sm text-white hover:cursor-pointer p-2.5 rounded-lg bg-blue-500">
+                    Search
+                  </button>
+                </div>
+
+                {userName && (
+                  <FriendProfile
+                    profileImage={profileImage}
+                    userName={userName}
+                  />
+                )}
+              </form>
+            )}
           </div>
         </div>
       ) : (

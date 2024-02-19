@@ -1,14 +1,5 @@
-import { useState } from "react";
-import Avatar from "../components/Avatar";
-import PostInProfile from "../components/PostInProfile";
-import { EditProfileModal } from "../features/profile/components/EditProfileModal";
-import useAuth from "../hooks/use-auth";
 import PostProfile from "../features/profile/components/PostProfile";
 import Profile from "../features/profile/components/Profile";
-
-const countPost = 4;
-const countFollower = 30;
-const countFollowing = 22;
 
 export default function ProfilePage() {
   return (

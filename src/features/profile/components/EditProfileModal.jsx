@@ -1,13 +1,47 @@
+import { toast } from "react-toastify";
 import Avatar from "../../../components/Avatar";
 import Button from "../../../components/Button";
+import useAuth from "../../../hooks/use-auth";
+import { useState } from "react";
+import { useRef } from "react";
+import Loading from "../../../components/Loading";
+import EditBio from "./EditBio";
 
-export function EditProfileModal({
-  onClose,
-  ProfileImage,
-  firstName,
-  lastName,
-  userName,
-}) {
+export function EditProfileModal({ onClose }) {
+  const { userData, updateUser, updateUserBioContext } = useAuth();
+  const [profileImage, setProfileImage] = useState(null);
+  const [bio, setBio] = useState(userData?.bio);
+  const [loading, setLoading] = useState(false);
+  const imageRef = useRef(null);
+
+  const updateProfileImage = async () => {
+    const formData = new FormData();
+    formData.append("profileImage", profileImage);
+    await updateUser(formData);
+  };
+
+  const handleSaveProfileImage = async () => {
+    try {
+      setLoading(true);
+      await updateProfileImage(profileImage);
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    } finally {
+      setProfileImage(null);
+      setLoading(false);
+    }
+  };
+
+  const handleSaveBio = async (e) => {
+    try {
+      e.preventDefault();
+      await updateUserBioContext(bio);
+      toast.success("Edit bio success");
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    }
+  };
+
   return (
     <>
       <div className="fixed bg-black inset-0 opacity-65"></div>
@@ -22,39 +56,106 @@ export function EditProfileModal({
               </button>
             </div>
             <div className="flex flex-col mt-10">
-              <div className="flex flex-row justify-around">
-                <div className="flex flex-row gap-5">
-                  <div className="flex flex-col justify-center">
-                    <Avatar extendClassName="w-[5rem] h-[5rem]" />
-                  </div>
-                  <div className="flex flex-col justify-center">
-                    <h1 className="text-base font-semibold">{userName}</h1>
-                    <div className="flex flex-row gap-1">
-                      <h1 className="text-sm font-normal">{firstName}</h1>
-                      <h1 className="text-sm font-normal">{lastName}</h1>
+              {/* Choose file from local storage */}
+              {loading && <Loading />}
+              <input
+                type="file"
+                className="hidden"
+                ref={imageRef}
+                onChange={(e) => {
+                  if (e.target.files[0]) {
+                    setProfileImage(e.target.files[0]);
+                  }
+                }}
+              />
+              {/* ------------------------------ */}
+              {/* EDIT IMAGE */}
+              <form>
+                {profileImage ? (
+                  <div className="flex flex-row justify-around">
+                    <div className="flex flex-row gap-5">
+                      <div className="flex flex-col justify-center">
+                        {
+                          <Avatar
+                            extendClassName="w-[5rem] h-[5rem]"
+                            src={URL.createObjectURL(profileImage)}
+                          />
+                        }
+                      </div>
+
+                      <div className="flex flex-col justify-center">
+                        <h1 className="text-base font-semibold">
+                          {userData?.userName}
+                        </h1>
+                        <div className="flex flex-row gap-1">
+                          <h1 className="text-sm font-normal">
+                            {userData?.firstName}
+                          </h1>
+                          <h1 className="text-sm font-normal">
+                            {userData?.lastName}
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <Button
+                        type="button"
+                        onClick={handleSaveProfileImage}
+                        text="Save"
+                        extendClassName="w-[6vw]"
+                      />
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setProfileImage(null);
+                          imageRef.current.value = "";
+                        }}
+                        text="Cancel"
+                        extendClassName="w-[6vw]"
+                      />
                     </div>
                   </div>
-                </div>
-                <div className="flex flex-col justify-center">
-                  <Button text="Change photo" extendClassName="w-[6vw]" />
-                </div>
-              </div>
-              <div className="mt-10 w-[12.8vw] flex justify-center">
-                <h1 className="text-xl font-semibold">Bio</h1>
-              </div>
-              <div className="flex justify-center">
-                <div className="flex justify-center mt-5 w-[70%] h-[30vh]">
-                  <textarea
-                    className="w-full outline outline-1 rounded-lg flex p-5 resize-none"
-                    type="text"
-                    maxLength="250"
-                  />
-                </div>
-              </div>
-              <div className="flex flex-row justify-around gap-14 w-full mt-8">
-                <Button text="Save" extendClassName="w-[6vw] invisible" />
-                <Button text="Save" extendClassName="w-[6vw]" />
-              </div>
+                ) : (
+                  <div className="flex flex-row justify-around">
+                    <div className="flex flex-row gap-5">
+                      <div className="flex flex-col justify-center">
+                        <Avatar
+                          extendClassName="w-[5rem] h-[5rem]"
+                          src={userData?.profileImage}
+                        />
+                      </div>
+
+                      <div className="flex flex-col justify-center">
+                        <h1 className="text-base font-semibold">
+                          {userData?.userName}
+                        </h1>
+                        <div className="flex flex-row gap-1">
+                          <h1 className="text-sm font-normal">
+                            {userData?.firstName}
+                          </h1>
+                          <h1 className="text-sm font-normal">
+                            {userData?.lastName}
+                          </h1>
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex flex-col justify-center">
+                      <Button
+                        type="button"
+                        onClick={() => imageRef.current.click()}
+                        text="Change photo"
+                        extendClassName="w-[6vw]"
+                      />
+                    </div>
+                  </div>
+                )}
+              </form>
+              {/* ----------------------------------- */}
+
+              {/* EDIT Bio */}
+              <form onSubmit={handleSaveBio}>
+                <EditBio value={bio} onChange={(e) => setBio(e.target.value)} />
+              </form>
             </div>
           </div>
         </div>

@@ -1,14 +1,11 @@
-import { createContext } from "react";
-
+import { useState, useEffect, createContext } from "react";
 import * as authApi from "../../../api/auth";
-import { useState } from "react";
+import * as userApi from "../../../api/user";
 import {
   getToken,
   removeToken,
   storeToken,
 } from "../../../utilities/local-storage";
-import { useEffect } from "react";
-import { toast } from "react-toastify";
 
 export const AuthContext = createContext();
 
@@ -44,9 +41,29 @@ export default function AuthContextProvider({ children }) {
     setAuthenticated(null);
   };
 
+  const updateUser = async (user) => {
+    const res = await userApi.updateUser(user);
+    setUserData((prev) => ({ ...prev, profileImage: res.data }));
+  };
+
+  const updateUserBioContext = async (bio) => {
+    console.log(bio);
+    const res = await userApi.updateUserBio(bio);
+    console.log(res);
+    setUserData((prev) => ({ ...prev, bio: res.data.bio }));
+  };
+
   return (
     <AuthContext.Provider
-      value={{ register, login, userData, logout, authenticated }}
+      value={{
+        register,
+        login,
+        userData,
+        logout,
+        authenticated,
+        updateUser,
+        updateUserBioContext,
+      }}
     >
       {children}
     </AuthContext.Provider>

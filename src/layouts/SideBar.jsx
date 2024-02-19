@@ -14,7 +14,7 @@ export default function SideBar() {
   const [modal, setModal] = useState(false);
   const [dropdown, setDropdown] = useState(false);
 
-  const { logout } = useAuth();
+  const { logout, userData } = useAuth();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -66,7 +66,7 @@ export default function SideBar() {
                 <Topic
                   symbol={
                     <>
-                      <Avatar />
+                      <Avatar src={userData?.profileImage} />
                     </>
                   }
                   title="Profile"
