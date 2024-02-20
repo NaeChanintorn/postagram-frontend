@@ -93,7 +93,7 @@ export default function SearchBar() {
 
                 {/* ----------------------------------- */}
                 <div className={defaultClassName}>
-                  <Link to="/profile/:userId">
+                  <Link to={`/profile/${userData?.id}`}>
                     <Avatar src={userData?.profileImage} />
                   </Link>
                 </div>

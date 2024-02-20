@@ -8,6 +8,7 @@ import SearchBar from "./SearchBar";
 import { CreateModal } from "../components/Modal";
 import Dropdown from "../components/Dropdown";
 import useAuth from "../hooks/use-auth";
+import useProfile from "../features/profile/hooks/use-profile";
 
 export default function SideBar() {
   const [search, setSearch] = useState(false);
@@ -15,6 +16,7 @@ export default function SideBar() {
   const [dropdown, setDropdown] = useState(false);
 
   const { logout, userData } = useAuth();
+  // console.log(userData);
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -62,7 +64,7 @@ export default function SideBar() {
               />
               {modal && <CreateModal onClose={() => setModal(false)} />}
               {/* ---------------------------------------- */}
-              <Link to="/profile/:userId">
+              <Link to={`/profile/${userData?.id}`}>
                 <Topic
                   symbol={
                     <>

@@ -32,10 +32,10 @@ export default function FriendProfile({
   );
 }
 
-export function SuggestedProfile({ userName, fisrtName, lastName, src }) {
+export function SuggestedProfile({ userName, fisrtName, lastName, src, id }) {
   return (
     <div className="flex flex-row">
-      <Link to="/profile/:userId">
+      <Link to={`/profile/${id}`}>
         <Avatar
           src={src}
           extendClassName="w-[3rem] h-[3rem] hover:cursor-pointer"
@@ -43,7 +43,7 @@ export function SuggestedProfile({ userName, fisrtName, lastName, src }) {
       </Link>
       <div className="flex flex-col mt-1 ml-3">
         <Link
-          to="/profile/:userId"
+          to={`/profile/${id}`}
           className="text-sm font-semibold hover:cursor-pointer"
         >
           {userName}

@@ -1,9 +1,13 @@
 import Profile from "./Profile";
 import PostProfile from "./PostProfile";
 import { useState } from "react";
+import useProfile from "../hooks/use-profile";
 
 export default function MainProfile() {
   const [editModal, setEditModal] = useState(false);
+
+  const { userProfile } = useProfile();
+  // console.log(userProfile);
 
   return (
     <div className="flex flex-row">

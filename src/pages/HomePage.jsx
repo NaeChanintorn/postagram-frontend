@@ -14,13 +14,14 @@ export default function HomePage() {
 
   const suggestedRandom = async () => {
     const res = await userApi.getSuggestedUsers();
-    console.log(res.data.randomUser, "-------------------");
+    // console.log(res.data.randomUser, "-------------------");
     setSuggested(res.data.randomUser);
   };
 
   const suggestedRender = suggested.map((user) => (
     <SuggestedProfile
       key={user.id}
+      id={user.id}
       userName={user.userName}
       profileImage={user.profileImage}
       fisrtName={user.firstName}
@@ -28,7 +29,7 @@ export default function HomePage() {
     />
   ));
 
-  console.log(suggestedRender, "****************");
+  // console.log(suggestedRender, "****************");
 
   return (
     // width sidebar = 17.5 vw width searchbar = 24.5 vw
@@ -40,6 +41,7 @@ export default function HomePage() {
         {/*  ME */}
         <SuggestedProfile
           src={userData?.profileImage}
+          id={userData?.id}
           userName={userData?.userName}
           fisrtName={userData?.firstName}
           lastName={userData?.lastName}
