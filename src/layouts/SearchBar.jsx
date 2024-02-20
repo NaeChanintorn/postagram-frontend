@@ -45,7 +45,7 @@ export default function SearchBar() {
   };
 
   const searchByUserName = async (input) => {
-    console.log(input, "---------------------");
+    // console.log(input, "---------------------");
     let res = await searchApi.searchUser(input);
     console.log(res.data);
     setProfileImage(res.data.profileImage);
@@ -54,7 +54,7 @@ export default function SearchBar() {
 
   const handleClickSearch = (e) => {
     e.preventDefault();
-    searchByUserName(input);
+    searchByUserName(input.toLowerCase());
     // console.log(input);
   };
 
@@ -79,7 +79,7 @@ export default function SearchBar() {
                   onClick={handleOpenSearchBar}
                   className={`border border-gray-300 ${defaultClassName}`}
                 >
-                  <SearchIcon />
+                  <SearchIcon fill="#000000" />
                 </div>
 
                 {/* CREATE MODAL */}
@@ -122,27 +122,32 @@ export default function SearchBar() {
                   <h1>Search</h1>
                 </div>
                 <div className="relative mx-auto">
+                  <SearchIcon
+                    className="absolute top-3 left-2 w-[1.2rem] h-[1.1rem]"
+                    fill="gray"
+                  />
                   <input
                     type="text"
                     placeholder="Search"
-                    className="bg-gray-100 font-light text-sm focus:outline-none px-3 py-3 w-[19vw] rounded-lg"
+                    className="bg-gray-100 font-light text-sm focus:outline-none px-8 py-3 w-[19vw] rounded-lg"
                     value={input}
                     onChange={handleChangeInput}
                   />
                   <button
+                    type="button"
                     onClick={handleDeleteInput}
                     className="absolute top-3 right-3 focus:outline-none"
                   >
                     <CloseIcon />
                   </button>
                 </div>
-                <hr />
+                {/* <hr />
                 <div className="flex flex-row justify-around gap-52">
                   <h1 className="font-medium text-sm">Recent</h1>
                   <h1 className="font-medium text-sm text-blue-500 hover:cursor-pointer">
                     Clear all
                   </h1>
-                </div>
+                </div> */}
               </form>
             ) : (
               // When searching
@@ -155,6 +160,10 @@ export default function SearchBar() {
                   <h1>Search</h1>
                 </div>
                 <div className="relative mx-auto">
+                  <SearchIcon
+                    className="absolute top-3 left-2 w-[1.2rem] h-[1.1rem] hidden"
+                    fill="gray"
+                  />
                   <input
                     type="text"
                     name="userName"

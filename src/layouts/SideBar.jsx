@@ -45,7 +45,7 @@ export default function SideBar() {
                 onClick={handleOpenSearchBar}
                 symbol={
                   <>
-                    <SearchIcon />
+                    <SearchIcon fill="#000000" />
                   </>
                 }
                 title="Search"

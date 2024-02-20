@@ -49,8 +49,8 @@ export function SuggestedProfile({ userName, fisrtName, lastName, src }) {
           {userName}
         </Link>
         <div className="flex flex-row gap-1">
-          <h2 className="text-sm">{fisrtName}</h2>
-          <h2 className="text-sm">{lastName}</h2>
+          <h2 className="text-sm font-light text-gray-400">{fisrtName}</h2>
+          <h2 className="text-sm font-light text-gray-400">{lastName}</h2>
         </div>
       </div>
     </div>

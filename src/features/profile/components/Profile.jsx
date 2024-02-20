@@ -17,14 +17,16 @@ export default function Profile() {
   const [editModal, setEditModal] = useState(false);
 
   const { userData } = useAuth();
-  const { follow, getFollowCount } = useProfile();
+  const { userProfile, follow, getFollowCount } = useProfile();
+
+  // console.log(userProfile);
 
   const following = follow.filter((el) => +el.followerId === +userData?.id);
   const follower = follow.filter((el) => +el.followingId === +userData?.id);
   // console.log(follower, following);
 
   useEffect(() => {
-    console.log(follow);
+    // console.log(follow);
     if (follow.length > 0) {
       return;
     }

@@ -19,6 +19,8 @@ export default function AuthContextProvider({ children }) {
     }
   }, [authenticated]);
 
+  // console.log(userData);
+
   const fetchAuthUser = async () => {
     const res = await authApi.getMe();
     setUserData(res.data.user);
@@ -47,9 +49,9 @@ export default function AuthContextProvider({ children }) {
   };
 
   const updateUserBioContext = async (bio) => {
-    console.log(bio);
+    // console.log(bio);
     const res = await userApi.updateUserBio(bio);
-    console.log(res);
+    // console.log(res);
     setUserData((prev) => ({ ...prev, bio: res.data.bio }));
   };
 

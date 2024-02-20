@@ -9,9 +9,7 @@ import ProfileContextProvider from "./features/profile/contexts/ProfileContext.j
 ReactDOM.createRoot(document.getElementById("root")).render(
   // <React.StrictMode>
   <AuthContextProvider>
-    <ProfileContextProvider>
-      <App />
-    </ProfileContextProvider>
+    <App />
   </AuthContextProvider>
   // </React.StrictMode>
 );

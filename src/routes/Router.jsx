@@ -7,6 +7,7 @@ import ProfilePage from "../pages/ProfilePage";
 import Redirected from "../features/auth/paths/Redirected";
 import ProtectedRoute from "../features/auth/paths/ProtectedRoute";
 import SetOutlet from "../components/SetOutlet";
+import ProfileContextProvider from "../features/profile/contexts/ProfileContext";
 
 const router = createBrowserRouter([
   {
@@ -40,7 +41,11 @@ const router = createBrowserRouter([
       },
       {
         path: "profile/:userId",
-        element: <ProfilePage />,
+        element: (
+          <ProfileContextProvider>
+            <ProfilePage />
+          </ProfileContextProvider>
+        ),
       },
     ],
   },
