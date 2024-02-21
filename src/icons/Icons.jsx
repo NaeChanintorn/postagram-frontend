@@ -160,3 +160,79 @@ export function PhotoIcon() {
     </svg>
   );
 }
+
+export function EditPostIcon({ onClick }) {
+  return (
+    <svg
+      onClick={onClick}
+      xmlns="http://www.w3.org/2000/svg"
+      version="1.1"
+      viewBox="0 0 16 16"
+      width="1.3rem"
+      height="1.3rem"
+      className="text-gray-500 hover:cursor-pointer"
+      stroke="currentColor"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      strokeWidth="1.5"
+    >
+      {" "}
+      <circle cx="2.5" cy="8" r=".75" /> <circle cx="8" cy="8" r=".75" />{" "}
+      <circle cx="13.5" cy="8" r=".75" />{" "}
+    </svg>
+  );
+}
+
+export function LikeIcon({ className }) {
+  return (
+    <svg
+      width="1.8rem"
+      height="1.8rem"
+      viewBox="0 0 24 24"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      className={className}
+    >
+      <path
+        fillRule="evenodd"
+        clipRule="evenodd"
+        d="M12 6.00019C10.2006 3.90317 7.19377 3.2551 4.93923 5.17534C2.68468 7.09558 2.36727 10.3061 4.13778 12.5772C5.60984 14.4654 10.0648 18.4479 11.5249 19.7369C11.6882 19.8811 11.7699 19.9532 11.8652 19.9815C11.9483 20.0062 12.0393 20.0062 12.1225 19.9815C12.2178 19.9532 12.2994 19.8811 12.4628 19.7369C13.9229 18.4479 18.3778 14.4654 19.8499 12.5772C21.6204 10.3061 21.3417 7.07538 19.0484 5.17534C16.7551 3.2753 13.7994 3.90317 12 6.00019Z"
+        stroke="#000000"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
+  );
+}
+
+export function CommentIcon({ className }) {
+  return (
+    <svg
+      fill="#000000"
+      width="1.8rem"
+      height="1.8rem"
+      viewBox="0 0 24.00 24.00"
+      xmlns="http://www.w3.org/2000/svg"
+      transform="rotate(0)matrix(-1, 0, 0, 1, 0, 0)"
+      stroke="#000000"
+      strokeWidth="0.72"
+      className={className}
+    >
+      <g id="SVGRepo_bgCarrier" strokeWidth="0" />
+
+      <g
+        id="SVGRepo_tracerCarrier"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+        stroke="#CCCCCC"
+        strokeWidth="0.72"
+      />
+
+      <g id="SVGRepo_iconCarrier">
+        {" "}
+        <path d="M8.2881437,19.1950792 C8.38869181,19.1783212 8.49195996,19.1926955 8.58410926,19.2362761 C9.64260561,19.7368747 10.8021412,20 12,20 C16.418278,20 20,16.418278 20,12 C20,7.581722 16.418278,4 12,4 C7.581722,4 4,7.581722 4,12 C4,13.7069096 4.53528582,15.3318588 5.51454846,16.6849571 C5.62010923,16.830816 5.63909672,17.022166 5.5642591,17.1859256 L4.34581002,19.8521348 L8.2881437,19.1950792 Z M3.58219949,20.993197 C3.18698783,21.0590656 2.87870208,20.6565881 3.04523765,20.2921751 L4.53592782,17.0302482 C3.54143337,15.5576047 3,13.818993 3,12 C3,7.02943725 7.02943725,3 12,3 C16.9705627,3 21,7.02943725 21,12 C21,16.9705627 16.9705627,21 12,21 C10.707529,21 9.4528641,20.727055 8.30053434,20.2068078 L3.58219949,20.993197 Z" />{" "}
+      </g>
+    </svg>
+  );
+}

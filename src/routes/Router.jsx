@@ -8,6 +8,7 @@ import Redirected from "../features/auth/paths/Redirected";
 import ProtectedRoute from "../features/auth/paths/ProtectedRoute";
 import SetOutlet from "../components/SetOutlet";
 import ProfileContextProvider from "../features/profile/contexts/ProfileContext";
+import PostContextProvider from "../features/post/contexts/PostContext";
 
 const router = createBrowserRouter([
   {
@@ -37,7 +38,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "",
-        element: <HomePage />,
+        element: (
+          <PostContextProvider>
+            <HomePage />
+          </PostContextProvider>
+        ),
       },
       {
         path: "profile/:userId",

@@ -3,14 +3,26 @@ import { SuggestedProfile } from "../components/FriendProfile";
 import useAuth from "../hooks/use-auth";
 import { useState } from "react";
 import * as userApi from "../api/user";
+import { ProfileContext } from "../features/profile/contexts/ProfileContext";
+import Post from "../features/post/components/Post";
+import usePost from "../features/post/hooks/use-post";
 
 export default function HomePage() {
   const { userData } = useAuth();
   const [suggested, setSuggested] = useState([]);
 
+  const { getAllPostsInHomePage, allPosts } = usePost();
+  //   console.log(getAllPostsInHomePage);
+
+  useEffect(() => {
+    getAllPostsInHomePage();
+  }, []);
+
   useEffect(() => {
     suggestedRandom();
   }, []);
+
+  // Suggested Users
 
   const suggestedRandom = async () => {
     const res = await userApi.getSuggestedUsers();
@@ -28,14 +40,26 @@ export default function HomePage() {
       lastName={user.lastName}
     />
   ));
-
   // console.log(suggestedRender, "****************");
+
+  // Posts AllUsers
+
+  const PostInHomePageRender = allPosts.map((post) => (
+    <Post
+      key={post.id}
+      id={post.posterId}
+      userName={post.poster.userName}
+      src={post.poster.profileImage}
+      imageorvideo={post.imageOrVideo}
+      caption={post.caption}
+    />
+  ));
 
   return (
     // width sidebar = 17.5 vw width searchbar = 24.5 vw
     <div className="overflow-auto flex flex-row w-[100vw] justify-between">
-      <div className="w-[30vw] invisible">invicible</div>
-      <div className="w-[35vw] text-center">Posts</div>
+      <div className="w-[25vw] invisible">invicible</div>
+      <div className="flex flex-col gap-3 mt-5">{PostInHomePageRender}</div>
       {/* Profile and Suggested Users */}
       <div className="w-[30vw] mt-10 flex flex-col gap-8">
         {/*  ME */}
