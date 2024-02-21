@@ -6,7 +6,7 @@ import useProfile from "../hooks/use-profile";
 export default function MainProfile() {
   const [editModal, setEditModal] = useState(false);
 
-  const { userProfile } = useProfile();
+  // const { userProfile } = useProfile();
   // console.log(userProfile);
 
   return (

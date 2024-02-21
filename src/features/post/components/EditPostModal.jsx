@@ -1,26 +1,25 @@
 import { toast } from "react-toastify";
-import Avatar from "../../../components/Avatar";
-import Button from "../../../components/Button";
 import useAuth from "../../../hooks/use-auth";
 import { useState } from "react";
-import { useRef } from "react";
-import Loading from "../../../components/Loading";
-import EditBio from "../../profile/components/EditBio";
 import Editform from "./Editform";
+import usePost from "../hooks/use-post";
 
 export function EditPostModal({ onClose }) {
   const { userData } = useAuth();
-  //   const [bio, setBio] = useState(userData?.bio);
+  const { editPostInHomePage } = usePost();
+  const [caption, setCaption] = useState(userData?.caption);
 
-  //   const handleSaveBio = async (e) => {
-  //     try {
-  //       e.preventDefault();
-  //       await updateUserBioContext(bio);
-  //       toast.success("Edit bio success");
-  //     } catch (error) {
-  //       toast.error(error.response?.data.message);
-  //     }
-  //   };
+  // console.log(userData);
+
+  const handleSaveCaption = async (e) => {
+    try {
+      e.preventDefault();
+      await editPostInHomePage(postId, caption);
+      toast.success("Edit post success");
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    }
+  };
 
   return (
     <>
@@ -37,8 +36,11 @@ export function EditPostModal({ onClose }) {
             </div>
             <div className="flex flex-col mt-10">
               {/* EDIT Caption */}
-              <form>
-                <Editform />
+              <form onSubmit={handleSaveCaption}>
+                <Editform
+                  value={caption}
+                  onChange={(e) => setCaption(e.target.value)}
+                />
               </form>
             </div>
           </div>

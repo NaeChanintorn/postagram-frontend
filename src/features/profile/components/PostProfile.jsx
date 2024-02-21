@@ -8,7 +8,7 @@ import useProfile from "../hooks/use-profile";
 export default function PostProfile() {
   const [posts, setPosts] = useState([]);
 
-  const { userProfile } = useProfile();
+  // const { userProfile } = useProfile();
   const { userId } = useParams();
   // console.log(userProfile, "..............");
 

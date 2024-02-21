@@ -9,6 +9,7 @@ import ProtectedRoute from "../features/auth/paths/ProtectedRoute";
 import SetOutlet from "../components/SetOutlet";
 import ProfileContextProvider from "../features/profile/contexts/ProfileContext";
 import PostContextProvider from "../features/post/contexts/PostContext";
+import PostPage from "../pages/Postpage";
 
 const router = createBrowserRouter([
   {
@@ -49,6 +50,14 @@ const router = createBrowserRouter([
         element: (
           <ProfileContextProvider>
             <ProfilePage />
+          </ProfileContextProvider>
+        ),
+      },
+      {
+        path: "/post/:userId/:postId",
+        element: (
+          <ProfileContextProvider>
+            <PostPage />
           </ProfileContextProvider>
         ),
       },

@@ -27,6 +27,7 @@ export default function Profile() {
   const following = follow.filter((el) => +el.followerId === +userProfile?.id);
   const follower = follow.filter((el) => +el.followingId === +userProfile?.id);
   // console.log(follower, following);
+  // console.log(userProfile);
 
   // useEffect(() => {
   //   // console.log(follow);
@@ -52,7 +53,7 @@ export default function Profile() {
     const fetchProfile = async () => {
       // console.log(userId);
       const res = await userApi.getProfileByTargetUserId(userId);
-      console.log(res);
+      // console.log(res, "55555555555555555555555555555555");
       // console.log(userData);
       setUserProfile(res.data.profileUser);
     };
@@ -61,7 +62,7 @@ export default function Profile() {
       getFollowCount(userProfile.id);
       // console.log(userData);
     }
-  }, [userId, follow]);
+  }, [userProfile, follow]);
 
   return (
     <div className="flex flex-row gap-32">
@@ -102,7 +103,7 @@ export default function Profile() {
         </div>
         <div className="flex flex-row gap-16">
           {/* Count post */}
-          {/* <CountPost /> */}
+          <CountPost />
           <Follow follower={follower.length} following={following.length} />
         </div>
         <div className="flex flex-col gap-1">

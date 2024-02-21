@@ -1,9 +1,12 @@
+import { Link } from "react-router-dom";
+
 export default function DropdownForPost({
   onClick1,
   onClick2,
   title1,
   title2,
   extendClassName,
+  postId,
 }) {
   return (
     <>
@@ -15,7 +18,7 @@ export default function DropdownForPost({
           role="button"
           onClick={onClick1}
         >
-          {title1}
+          <Link to={`/posts/${postId}`}>{title1}</Link>
         </li>
         <li
           className="text-sm font-normal hover:bg-gray-200 p-2 rounded-lg"

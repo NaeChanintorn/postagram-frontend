@@ -6,11 +6,13 @@ import { useState } from "react";
 import { useRef } from "react";
 import Loading from "../../../components/Loading";
 import EditBio from "./EditBio";
+import useProfile from "../hooks/use-profile";
 
 export function EditProfileModal({ onClose }) {
   const { userData, updateUser, updateUserBioContext } = useAuth();
+  const { userProfile } = useProfile();
   const [profileImage, setProfileImage] = useState(null);
-  const [bio, setBio] = useState(userData?.bio);
+  const [bio, setBio] = useState(userProfile?.bio);
   const [loading, setLoading] = useState(false);
   const imageRef = useRef(null);
 

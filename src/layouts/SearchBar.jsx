@@ -16,6 +16,8 @@ import { CreateModal } from "../components/Modal";
 import * as searchApi from "../api/search";
 import { toast } from "react-toastify";
 import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+import useProfile from "../features/profile/hooks/use-profile";
 
 const defaultClassName =
   "hover:cursor-pointer hover:bg-gray-100 flex justify-center items-center rounded-lg p-3 mx-3";
@@ -29,6 +31,7 @@ export default function SearchBar() {
   // search feature
   const [profileImage, setProfileImage] = useState(null);
   const [userName, setUserName] = useState(null);
+  const [userId, setUserId] = useState(null);
 
   const { logout, userData } = useAuth();
 
@@ -50,6 +53,7 @@ export default function SearchBar() {
     console.log(res.data);
     setProfileImage(res.data.profileImage);
     setUserName(res.data.userName);
+    setUserId(res.data.id);
   };
 
   const handleClickSearch = (e) => {
@@ -129,7 +133,7 @@ export default function SearchBar() {
                   <input
                     type="text"
                     placeholder="Search"
-                    className="bg-gray-100 font-light text-sm focus:outline-none px-8 py-3 w-[19vw] rounded-lg"
+                    className="z-0 bg-gray-100 font-light text-sm focus:outline-none px-8 py-3 w-[19vw] rounded-lg"
                     value={input}
                     onChange={handleChangeInput}
                   />
@@ -187,6 +191,7 @@ export default function SearchBar() {
 
                 {userName && (
                   <FriendProfile
+                    userId={userId}
                     profileImage={profileImage}
                     userName={userName}
                   />

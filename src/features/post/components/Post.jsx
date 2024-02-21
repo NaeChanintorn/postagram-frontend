@@ -6,11 +6,27 @@ import Like from "./Like";
 import PostHeader from "./PostHeader";
 import usePost from "../hooks/use-post";
 
-export default function Post({ userName, src, imageorvideo, caption }) {
+export default function Post({
+  userName,
+  src,
+  imageorvideo,
+  caption,
+  countLike,
+  countComment,
+  createdAt,
+  id,
+  postId,
+}) {
   return (
     <div className="w-[25vw] h-[90vh] flex flex-col">
       {/* Header */}
-      <PostHeader userName={userName} src={src} />
+      <PostHeader
+        postId={postId}
+        userName={userName}
+        src={src}
+        createdAt={createdAt}
+        id={id}
+      />
 
       {/* Image */}
       <ImageOrVideo imageorvideo={imageorvideo} />
@@ -19,10 +35,14 @@ export default function Post({ userName, src, imageorvideo, caption }) {
       <ButtonInPost />
 
       {/* Like */}
-      <Like />
+      <Like countLike={countLike} />
 
       {/* Comment */}
-      <Comment userName={userName} caption={caption} />
+      <Comment
+        countComment={countComment}
+        userName={userName}
+        caption={caption}
+      />
 
       <hr className="text-gray-300" />
     </div>
