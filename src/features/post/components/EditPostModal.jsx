@@ -1,15 +1,15 @@
 import { toast } from "react-toastify";
+import Avatar from "../../../components/Avatar";
+import Button from "../../../components/Button";
 import useAuth from "../../../hooks/use-auth";
 import { useState } from "react";
 import Editform from "./Editform";
 import usePost from "../hooks/use-post";
 
-export function EditPostModal({ onClose }) {
+export function EditPostModal({ onClose, postId }) {
   const { userData } = useAuth();
   const { editPostInHomePage } = usePost();
   const [caption, setCaption] = useState(userData?.caption);
-
-  // console.log(userData);
 
   const handleSaveCaption = async (e) => {
     try {
@@ -23,8 +23,8 @@ export function EditPostModal({ onClose }) {
 
   return (
     <>
-      <div className="fixed bg-black inset-0 opacity-65"></div>
-      <div className="fixed inset-0">
+      <div className="z-5 fixed bg-black inset-0 opacity-65"></div>
+      <div className="z-10 fixed inset-0">
         <div className="flex  items-center justify-center min-h-full py-8">
           <div className="bg-white  rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
             <div className="border-b flex  justify-between p-4">

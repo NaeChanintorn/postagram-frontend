@@ -16,35 +16,40 @@ export default function Post({
   createdAt,
   id,
   postId,
+  isDeleted,
 }) {
   return (
-    <div className="w-[25vw] h-[90vh] flex flex-col">
-      {/* Header */}
-      <PostHeader
-        postId={postId}
-        userName={userName}
-        src={src}
-        createdAt={createdAt}
-        id={id}
-      />
+    <>
+      {isDeleted ? null : (
+        <div className="w-[25vw] h-[90vh] flex flex-col">
+          {/* Header */}
+          <PostHeader
+            postId={postId}
+            userName={userName}
+            src={src}
+            createdAt={createdAt}
+            id={id}
+          />
 
-      {/* Image */}
-      <ImageOrVideo imageorvideo={imageorvideo} />
+          {/* Image */}
+          <ImageOrVideo imageorvideo={imageorvideo} />
 
-      {/* Button */}
-      <ButtonInPost />
+          {/* Button */}
+          <ButtonInPost />
 
-      {/* Like */}
-      <Like countLike={countLike} />
+          {/* Like */}
+          <Like countLike={countLike} />
 
-      {/* Comment */}
-      <Comment
-        countComment={countComment}
-        userName={userName}
-        caption={caption}
-      />
+          {/* Comment */}
+          <Comment
+            countComment={countComment}
+            userName={userName}
+            caption={caption}
+          />
 
-      <hr className="text-gray-300" />
-    </div>
+          <hr className="text-gray-300" />
+        </div>
+      )}
+    </>
   );
 }

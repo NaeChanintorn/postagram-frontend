@@ -26,7 +26,7 @@ export default function Comment({ userName, caption, countComment }) {
         <form onSubmit={handleSubmit} className="relative">
           <textarea
             type="text"
-            className="z-0 my-3 pr-16 text-sm bg-[rgb(255, 255, 255)] w-full resize-none focus:outline-none "
+            className=" my-3 pr-16 text-sm bg-[rgb(255, 255, 255)] w-full resize-none focus:outline-none "
             maxLength="150"
             placeholder="Add a comment........"
             value={input}

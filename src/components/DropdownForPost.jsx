@@ -6,7 +6,6 @@ export default function DropdownForPost({
   title1,
   title2,
   extendClassName,
-  postId,
 }) {
   return (
     <>
@@ -18,7 +17,7 @@ export default function DropdownForPost({
           role="button"
           onClick={onClick1}
         >
-          <Link to={`/posts/${postId}`}>{title1}</Link>
+          {title1}
         </li>
         <li
           className="text-sm font-normal hover:bg-gray-200 p-2 rounded-lg"

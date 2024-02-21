@@ -93,7 +93,9 @@ export default function SearchBar() {
                 >
                   <CreateIcon />
                 </div>
-                {modal && <CreateModal onClose={() => setModal(false)} />}
+                <div className="z-50">
+                  {modal && <CreateModal onClose={() => setModal(false)} />}
+                </div>
 
                 {/* ----------------------------------- */}
                 <div className={defaultClassName}>

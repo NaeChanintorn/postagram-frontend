@@ -7,9 +7,7 @@ export const PostContext = createContext();
 
 export default function PostContextProvider({ children }) {
   const [allPosts, setAllPosts] = useState([]);
-  const [postId, setPostId] = useState(null);
   const [postData, setPostData] = useState(null);
-  const { userData } = useAuth();
 
   const getAllPostsInHomePage = async (postId, caption) => {
     const res = await postApi.getAllPosts(caption);
@@ -17,15 +15,32 @@ export default function PostContextProvider({ children }) {
     setAllPosts(res.data.posts);
   };
 
-  const editPostInHomePage = async (caption) => {
-    const res = await postApi.editPost(caption);
+  const editPostInHomePage = async (postId, caption) => {
+    const res = await postApi.editPost(postId, caption);
     // console.log(res);
     setPostData((prev) => ({ ...prev, caption: res.data.caption }));
   };
 
+  const deletePostInHomePage = async (postId) => {
+    // console.log(postId);
+    await postApi.deletePost(postId);
+  };
+
+  const createPostImage = async (image, caption) => {
+    const res = await postApi.createPostImage(image, caption);
+    setPostData(res.data.post);
+  };
+
   return (
     <PostContext.Provider
-      value={{ getAllPostsInHomePage, allPosts, editPostInHomePage, postData }}
+      value={{
+        getAllPostsInHomePage,
+        allPosts,
+        editPostInHomePage,
+        postData,
+        deletePostInHomePage,
+        createPostImage,
+      }}
     >
       {children}
     </PostContext.Provider>

@@ -5,15 +5,29 @@ import DropdownForPost from "../../../components/DropdownForPost";
 import { EditPostModal } from "./EditPostModal";
 import formatTimeAgo from "../../../utilities/time-ago";
 import useAuth from "../../../hooks/use-auth";
+import usePost from "../hooks/use-post";
+import { toast } from "react-toastify";
 
-export default function PostHeader({ userName, src, createdAt, postId, id }) {
+export default function PostHeader({ userName, src, createdAt, id, postId }) {
   const [dropdown, setDropdown] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const { userData } = useAuth();
+  const { deletePostInHomePage } = usePost();
   // console.log(userData.id, "...........................");
   // console.log(userData.posts);
   // console.log(allPosts);
-  // console.log(id);
+
+  const handleDeletePost = (e) => {
+    try {
+      // console.log("---------------------------");
+      e.preventDefault();
+      console.log(postId);
+      deletePostInHomePage(postId);
+      toast.success("Delete post success");
+    } catch (error) {
+      toast.error(error.response?.data.message);
+    }
+  };
 
   return (
     <div className="flex flex-row justify-between h-[8vh] mx-2 ">
@@ -35,8 +49,12 @@ export default function PostHeader({ userName, src, createdAt, postId, id }) {
               <DropdownForPost
                 title1="Edit Post"
                 title2="Delete Post"
-                postId={postId}
+                onClick1={() => setIsEdit(true)}
+                onClick2={handleDeletePost}
               />
+            )}
+            {isEdit && (
+              <EditPostModal postId={postId} onClose={() => setIsEdit(false)} />
             )}
           </div>
         ) : null}

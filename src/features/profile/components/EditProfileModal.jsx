@@ -19,6 +19,8 @@ export function EditProfileModal({ onClose }) {
   const updateProfileImage = async () => {
     const formData = new FormData();
     formData.append("profileImage", profileImage);
+    // console.log(profileImage);
+    // formData.getAll("profileImage");
     await updateUser(formData);
   };
 
