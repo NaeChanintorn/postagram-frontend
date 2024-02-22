@@ -29,7 +29,7 @@ export default function ProfileContextProvider({ children }) {
   };
 
   const getPostCount = async (userId) => {
-    const res = await postApi.getAllPostsForEachUser(userId);
+    const res = await postApi.getAllPostsForEachUser(+userId);
     setPost(res.data.posts);
   };
 
@@ -37,28 +37,28 @@ export default function ProfileContextProvider({ children }) {
     await followApi.unfollow(id);
   };
 
-  // useEffect(() => {
-  //   const fetchProfile = async () => {
-  //     try {
-  //       // console.log(userId);
-  //       const res = await userApi.getProfileByTargetUserId(userId);
-  //       console.log(res);
-  //       // console.log(userData);
-  //       setUserProfile(res.data.profileUser);
-  //     } catch (error) {
-  //       toast.error(error.response?.data.message);
-  //     }
-  //   };
-  //   fetchProfile();
-  // }, [userId]);
+  useEffect(() => {
+    const fetchProfile = async () => {
+      try {
+        // console.log(userId);
+        const res = await userApi.getProfileByTargetUserId(+userId);
+        // console.log(res);
+        // console.log(userData);
+        setUserProfile(res.data.profileUser);
+      } catch (error) {
+        toast.error(error.response?.data.message);
+      }
+    };
+    fetchProfile();
+  }, [userId]);
 
   // useEffect(() => {
-  //   if (userData) {
-  //     if (+userId === userData.id) {
-  //       setUserProfile(userData);
+  //   if (userProfile) {
+  //     if (+userId === userProfile.id) {
+  //       setUserProfile(userProfile);
   //     }
   //   }
-  // }, [userId, userData]);
+  // }, [userId, userProfile]);
 
   return (
     <ProfileContext.Provider

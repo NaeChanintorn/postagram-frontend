@@ -6,7 +6,7 @@ export default function CountPost() {
 
   const countPost = userProfile?.posts?.length;
 
-  console.log(countPost);
+  // console.log(countPost);
 
   // useEffect(() => {
   //   // if (countPost > 0) {

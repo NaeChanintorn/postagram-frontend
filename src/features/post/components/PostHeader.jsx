@@ -21,7 +21,7 @@ export default function PostHeader({ userName, src, createdAt, id, postId }) {
     try {
       // console.log("---------------------------");
       e.preventDefault();
-      console.log(postId);
+      // console.log(postId);
       deletePostInHomePage(postId);
       toast.success("Delete post success");
     } catch (error) {

@@ -41,9 +41,9 @@ const router = createBrowserRouter([
         path: "",
         element: (
           <PostContextProvider>
-            <ProfileContextProvider>
-              <HomePage />
-            </ProfileContextProvider>
+            {/* <ProfileContextProvider> */}
+            <HomePage />
+            {/* </ProfileContextProvider> */}
           </PostContextProvider>
         ),
       },

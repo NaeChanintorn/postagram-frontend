@@ -11,7 +11,7 @@ export default function HomePage() {
   const { userData } = useAuth();
   const [suggested, setSuggested] = useState([]);
 
-  const { getAllPostsInHomePage, allPosts, postData, isClick } = usePost();
+  const { getAllPostsInHomePage, allPosts, isClick } = usePost();
 
   useEffect(() => {
     getAllPostsInHomePage();

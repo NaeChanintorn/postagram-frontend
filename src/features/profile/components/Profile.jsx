@@ -14,11 +14,11 @@ import * as userApi from "../../../api/user";
 import CountPost from "./CountPost";
 
 export default function Profile() {
-  const [profile, setProfile] = useState({});
+  const { userId } = useParams();
+  const [profile, setProfile] = useState(userId);
   const [editModal, setEditModal] = useState(false);
   const [isClickFollow, setIsClickFollow] = useState(false);
 
-  const { userId } = useParams();
   const { userData } = useAuth();
   const {
     userProfile,
@@ -28,7 +28,7 @@ export default function Profile() {
     createFollow,
     deleteFollow,
   } = useProfile();
-  // console.log(userId);
+  // console.log(userId, "------------------");
 
   const visitingOwnProfile = userData && userData.id === userProfile.id;
   const visitingAnotherProfile = userData && userData.id !== userProfile.id;
@@ -83,8 +83,8 @@ export default function Profile() {
     }
 
     const fetchProfile = async () => {
+      const res = await userApi.getProfileByTargetUserId(+userId);
       // console.log(userId);
-      const res = await userApi.getProfileByTargetUserId(userId);
       // console.log(res, "55555555555555555555555555555555");
       // console.log(userData);
       setUserProfile(res.data.profileUser);
@@ -94,7 +94,7 @@ export default function Profile() {
       getFollowCount(userProfile.id);
       // console.log(userData);
     }
-  }, [userProfile, follow, isClickFollow]);
+  }, [userProfile, follow, isClickFollow, profile]);
 
   return (
     <div className="flex flex-row gap-32">

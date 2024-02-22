@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
+import { Navigate } from "react-router-dom";
 
 export default function FriendProfile({
   profileImage,
