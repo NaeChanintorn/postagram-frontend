@@ -1,11 +1,9 @@
 import { useState } from "react";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import useProfile from "../hooks/use-profile";
 
 export default function Follow({ following, follower }) {
-  const { userId } = useParams();
-  const [showFollow, setShowFollow] = useState(1);
+  // const { userId } = useParams();
 
   // const user = follow.filter;
 
@@ -28,11 +26,11 @@ export default function Follow({ following, follower }) {
   return (
     <>
       <div className="flex flex-row gap-2">
-        <h1 className="font-medium">{follower}</h1>
+        <h1 className="font-medium">{follower || 0}</h1>
         {follower > 1 ? <h1>followers</h1> : <h1>follower</h1>}
       </div>
       <div className="flex flex-row gap-2">
-        <h1 className="font-medium">{following}</h1>
+        <h1 className="font-medium">{following || 0}</h1>
         <h1>following</h1>
       </div>
     </>

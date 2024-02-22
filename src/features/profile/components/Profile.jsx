@@ -62,39 +62,23 @@ export default function Profile() {
   };
 
   // useEffect(() => {
-  //   // console.log(follow);
-  //   if (follow.length > 0) {
+  //   if (follow?.length > 0) {
   //     return;
   //   }
-  //   const fetchMe = async () => {
-  //     const res = await getMe();
-  //     setProfile(res.data);
+
+  //   const fetchProfile = async () => {
+  //     // const res = await userApi.getProfileByTargetUserId(+userId);
+  //     // console.log(userId);
+  //     // console.log(res, "55555555555555555555555555555555");
+  //     // console.log(userData);
+  //     // setUserProfile(res.data.profileUser);
   //   };
-  //   fetchMe();
-  //   if (userData) {
-  //     getFollowCount(userData?.id);
+  //   fetchProfile();
+  //   if (userProfile) {
+  //     getFollowCount(userProfile.id);
   //     // console.log(userData);
   //   }
-  // }, [userData, follow]);
-
-  useEffect(() => {
-    if (follow.length > 0) {
-      return;
-    }
-
-    const fetchProfile = async () => {
-      const res = await userApi.getProfileByTargetUserId(+userId);
-      // console.log(userId);
-      // console.log(res, "55555555555555555555555555555555");
-      // console.log(userData);
-      setUserProfile(res.data.profileUser);
-    };
-    fetchProfile();
-    if (userProfile) {
-      getFollowCount(userProfile.id);
-      // console.log(userData);
-    }
-  }, [userProfile, follow, isClickFollow, profile]);
+  // }, [userProfile, isClickFollow, follow, profile]);
 
   return (
     <div className="flex flex-row gap-32">
@@ -144,7 +128,7 @@ export default function Profile() {
         <div className="flex flex-row gap-16">
           {/* Count post */}
           <CountPost />
-          <Follow follower={follower.length} following={following.length} />
+          <Follow follower={follower?.length} following={following?.length} />
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex flex-row gap-1">

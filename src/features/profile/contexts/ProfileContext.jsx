@@ -38,19 +38,27 @@ export default function ProfileContextProvider({ children }) {
   };
 
   useEffect(() => {
+    if (follow.length > 0) {
+      return;
+    }
     const fetchProfile = async () => {
       try {
         // console.log(userId);
         const res = await userApi.getProfileByTargetUserId(+userId);
+        // getFollowCount();
         // console.log(res);
         // console.log(userData);
         setUserProfile(res.data.profileUser);
+        // if (userProfile) {
+        getFollowCount(userProfile?.id);
+        // console.log(userData);
+        // }
       } catch (error) {
         toast.error(error.response?.data.message);
       }
     };
     fetchProfile();
-  }, [userId]);
+  }, [userId, follow]);
 
   // useEffect(() => {
   //   if (userProfile) {

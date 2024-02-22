@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import Avatar from "./Avatar";
-import { Navigate } from "react-router-dom";
 
 export default function FriendProfile({
   profileImage,
@@ -33,12 +32,18 @@ export default function FriendProfile({
   );
 }
 
-export function SuggestedProfile({ userName, fisrtName, lastName, src, id }) {
+export function SuggestedProfile({
+  userName,
+  fisrtName,
+  lastName,
+  id,
+  profileImage,
+}) {
   return (
     <div className="flex flex-row">
       <Link to={`/profile/${id}`}>
         <Avatar
-          src={src}
+          src={profileImage}
           extendClassName="w-[3rem] h-[3rem] hover:cursor-pointer"
         />
       </Link>

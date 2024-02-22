@@ -4,6 +4,10 @@ import usePost from "../features/post/hooks/use-post";
 import { useEffect } from "react";
 import formatTimeAgo from "../utilities/time-ago";
 import useProfile from "../features/profile/hooks/use-profile";
+import Dropdown from "./Dropdown";
+import useAuth from "../hooks/use-auth";
+import { EditPostIcon } from "../icons/Icons";
+import EditComment from "./EditComment";
 
 export default function PostModal({
   onClose,
@@ -15,13 +19,14 @@ export default function PostModal({
 }) {
   const [input, setInput] = useState("");
   const [onClick, setClick] = useState(false);
+
   //   console.log(postId);
 
   const { commentData, getCommentContext, createCommentContext } = usePost();
   const { userProfile } = useProfile();
 
   //   console.log(userProfile);
-  //   console.log(commentData);
+  console.log(commentData, "---------------------------------");
 
   const checkImageOrVideo = src.endsWith("mp4" || "MPEG-4");
 
@@ -40,6 +45,8 @@ export default function PostModal({
     getCommentContext(postId);
   }, [onClick]);
 
+  // Mapping
+
   let commentRender;
 
   if (commentData?.length > 0) {
@@ -50,7 +57,12 @@ export default function PostModal({
             <Avatar src={el.commenter.profileImage} />
           </div>
           <span>{el.commenter.userName}</span>
-          <span>{el.comment}</span>
+          <EditComment
+            postId={el.postId}
+            id={el.commenterId}
+            comment={el.comment}
+            commentId={el.id}
+          />
         </div>
         <div className="ml-14">
           <small>{formatTimeAgo(el.createdAt)}</small>

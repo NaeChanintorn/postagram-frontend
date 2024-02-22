@@ -115,6 +115,7 @@ export default function SearchBar() {
               {dropdown && (
                 <Dropdown
                   onClick={logout}
+                  title="Logout"
                   extendClassName="left-3 -top-[3.75rem]"
                 />
               )}

@@ -87,7 +87,11 @@ export default function SideBar() {
               onClick={() => setDropdown(!dropdown)}
             />
             {dropdown && (
-              <Dropdown onClick={logout} extendClassName="left-4 -top-11" />
+              <Dropdown
+                title="Logout"
+                onClick={logout}
+                extendClassName="left-4 -top-11"
+              />
             )}
           </div>
         </div>

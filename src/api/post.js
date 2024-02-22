@@ -32,3 +32,6 @@ export const createComment = (comment, postId) =>
 
 export const getAllComment = (postId) =>
   axios.post("/posts/get-comment", { postId });
+
+export const editComment = (comment, postId, commentId) =>
+  axios.patch("/posts/edit-comment", { comment, postId, commentId });

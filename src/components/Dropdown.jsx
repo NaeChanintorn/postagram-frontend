@@ -1,4 +1,4 @@
-export default function Dropdown({ onClick, extendClassName }) {
+export default function Dropdown({ onClick, extendClassName, title }) {
   return (
     <>
       <ul
@@ -9,7 +9,7 @@ export default function Dropdown({ onClick, extendClassName }) {
           role="button"
           onClick={onClick}
         >
-          Log out
+          {title}
         </li>
       </ul>
     </>

@@ -2,6 +2,7 @@ import { createContext } from "react";
 import * as postApi from "../../../api/post";
 import { useState } from "react";
 import useAuth from "../../../hooks/use-auth";
+import { useEffect } from "react";
 
 export const PostContext = createContext();
 
@@ -53,12 +54,19 @@ export default function PostContextProvider({ children }) {
 
   const createCommentContext = async (comment, postId) => {
     const res = await postApi.createComment(comment, postId);
+    getCommentContext(postId);
     setCommentData(res.data.newComment);
   };
 
   const getCommentContext = async (postId) => {
     const res = await postApi.getAllComment(postId);
     setCommentData(res.data.allComments);
+  };
+
+  const editCommentContext = async (comment, postId, commentId) => {
+    const res = await postApi.editComment(comment, postId, commentId);
+    getCommentContext(postId);
+    setCommentData((prev) => ({ ...prev, comment: res.data.edit.comment }));
   };
 
   return (
@@ -76,6 +84,7 @@ export default function PostContextProvider({ children }) {
         createCommentContext,
         commentData,
         getCommentContext,
+        editCommentContext,
       }}
     >
       {children}

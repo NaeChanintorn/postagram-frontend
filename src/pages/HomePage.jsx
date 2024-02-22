@@ -10,12 +10,15 @@ import usePost from "../features/post/hooks/use-post";
 export default function HomePage() {
   const { userData } = useAuth();
   const [suggested, setSuggested] = useState([]);
+  const [onClick, setOnClick] = useState(false);
+
+  console.log(suggested);
 
   const { getAllPostsInHomePage, allPosts, isClick } = usePost();
 
   useEffect(() => {
     getAllPostsInHomePage();
-  }, [isClick]);
+  }, [isClick, onClick]);
 
   useEffect(() => {
     suggestedRandom();
@@ -70,7 +73,7 @@ export default function HomePage() {
       <div className="w-[30vw] mt-10 flex flex-col gap-8">
         {/*  ME */}
         <SuggestedProfile
-          src={userData?.profileImage}
+          profileImage={userData?.profileImage}
           id={userData?.id}
           userName={userData?.userName}
           fisrtName={userData?.firstName}
