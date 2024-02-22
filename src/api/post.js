@@ -29,3 +29,6 @@ export const unlikePost = (postId, userId) =>
 
 export const createComment = (comment, postId) =>
   axios.post("/posts/comment", { comment, postId });
+
+export const getAllComment = (postId) =>
+  axios.post("/posts/get-comment", { postId });

@@ -1,9 +1,20 @@
 import React from "react";
 import { useState } from "react";
 import usePost from "../hooks/use-post";
+import PostModalInHomePage from "./PostModalInHomePage";
 
-export default function Comment({ userName, caption, countComment, postId }) {
+export default function Comment({
+  userName,
+  imageorvideo,
+  caption,
+  countComment,
+  postId,
+  src,
+  createdAt,
+  like,
+}) {
   const [input, setInput] = useState("");
+  const [onClick, setOnClick] = useState(false);
 
   const { createCommentContext } = usePost();
 
@@ -23,9 +34,26 @@ export default function Comment({ userName, caption, countComment, postId }) {
         <span className="text-sm font-medium">{userName}</span>
         <span className="text-sm font-normal">{caption}</span>
       </div>
-      <span className="text-sm font-normal hover:cursor-pointer">
+
+      <span
+        onClick={() => setOnClick(true)}
+        className="text-sm font-normal hover:cursor-pointer"
+      >
         View all {countComment} comments
       </span>
+      {onClick && (
+        <PostModalInHomePage
+          imageorvideo={imageorvideo}
+          onClose={() => setOnClick(false)}
+          caption={caption}
+          src={src}
+          postId={postId}
+          createdAt={createdAt}
+          like={like}
+          userName={userName}
+        />
+      )}
+
       {input ? (
         <form onSubmit={handleSubmit} className="relative">
           <textarea

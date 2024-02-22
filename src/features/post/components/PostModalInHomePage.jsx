@@ -1,29 +1,31 @@
 import { useState } from "react";
-import Avatar from "./Avatar";
-import usePost from "../features/post/hooks/use-post";
 import { useEffect } from "react";
-import formatTimeAgo from "../utilities/time-ago";
-import useProfile from "../features/profile/hooks/use-profile";
+import Avatar from "../../../components/Avatar";
+import useProfile from "../../profile/hooks/use-profile";
+import usePost from "../hooks/use-post";
+import formatTimeAgo from "../../../utilities/time-ago";
 
-export default function PostModal({
+export default function PostModalInHomePage({
   onClose,
   postId,
-  src,
+  imageorvideo,
   caption,
   createdAt,
   like,
+  src,
+  userName,
 }) {
   const [input, setInput] = useState("");
   const [onClick, setClick] = useState(false);
   //   console.log(postId);
+  //   console.log(src);
+  //   console.log(imageorvideo);
 
   const { commentData, getCommentContext, createCommentContext } = usePost();
-  const { userProfile } = useProfile();
-
+  //   console.log(commentData, postData, allPosts);
   //   console.log(userProfile);
-  //   console.log(commentData);
-
-  const checkImageOrVideo = src.endsWith("mp4" || "MPEG-4");
+  // console.log(commentData);
+  const checkImageOrVideo = imageorvideo.endsWith("mp4" || "MPEG-4");
 
   const handleSubmit = async (e) => {
     setClick((prev) => !prev);
@@ -68,20 +70,21 @@ export default function PostModal({
             <div className="flex flex-row h-full">
               <div className="w-3/5 h-full">
                 {checkImageOrVideo ? (
-                  <video className="h-full w-full" src={src} />
+                  <video className="h-full w-full" src={imageorvideo} />
                 ) : (
-                  <img className="h-full w-full" src={src} alt="image" />
+                  <img
+                    className="h-full w-full"
+                    src={imageorvideo}
+                    alt="image"
+                  />
                 )}
               </div>
               {/* ---------------RIGTH SIDE--------------- */}
               <div className="w-2/5 flex flex-col">
                 <div className="border-b flex flex-row items-center justify-between w-full h-[7vh] ">
                   <div className="flex flex-row gap-3">
-                    <Avatar
-                      src={userProfile?.profileImage}
-                      extendClassName="ml-5"
-                    />
-                    <span>{userProfile?.userName}</span>
+                    <Avatar src={src} extendClassName="ml-5" />
+                    <span>{userName}</span>
                   </div>
                   <button onClick={onClose} className="font-bold mr-5">
                     &#10005;
@@ -92,9 +95,9 @@ export default function PostModal({
                   <div className="flex flex-col ">
                     <div className="flex flex-row gap-3">
                       <div className="ml-5">
-                        <Avatar src={userProfile?.profileImage} />
+                        <Avatar src={src} />
                       </div>
-                      <span>{userProfile?.userName}</span>
+                      <span>{userName}</span>
                       <span>{caption}</span>
                     </div>
                     <div className="ml-14">

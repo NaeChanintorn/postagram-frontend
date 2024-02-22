@@ -56,6 +56,11 @@ export default function PostContextProvider({ children }) {
     setCommentData(res.data.newComment);
   };
 
+  const getCommentContext = async (postId) => {
+    const res = await postApi.getAllComment(postId);
+    setCommentData(res.data.allComments);
+  };
+
   return (
     <PostContext.Provider
       value={{
@@ -70,6 +75,7 @@ export default function PostContextProvider({ children }) {
         isClick,
         createCommentContext,
         commentData,
+        getCommentContext,
       }}
     >
       {children}

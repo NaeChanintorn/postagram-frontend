@@ -19,6 +19,7 @@ export default function Post({
   isDeleted,
   like,
 }) {
+  // console.log(imageorvideo);
   return (
     <>
       {isDeleted ? null : (
@@ -47,6 +48,10 @@ export default function Post({
             userName={userName}
             caption={caption}
             postId={postId}
+            imageorvideo={imageorvideo}
+            createdAt={createdAt}
+            like={like}
+            src={src}
           />
 
           <hr className="text-gray-300" />

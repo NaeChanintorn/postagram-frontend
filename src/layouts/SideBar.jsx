@@ -25,7 +25,7 @@ export default function SideBar() {
   return (
     <>
       {!search ? (
-        <div className="z-50 flex flex-col justify-between w-[17.5vw] h-screen border-r border-gray-300 fixed">
+        <div className="z-40 flex flex-col justify-between w-[17.5vw] h-screen border-r border-gray-300 fixed">
           <div className="flex flex-col gap-5">
             <div className="flex flex-row">
               <Link to="/">
