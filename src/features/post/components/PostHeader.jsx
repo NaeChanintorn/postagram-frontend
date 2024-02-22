@@ -41,7 +41,7 @@ export default function PostHeader({ userName, src, createdAt, id, postId }) {
         </small>
       </div>
       <div className="flex items-center">
-        {id === +userData.id ? (
+        {id === +userData?.id ? (
           <div className="relative">
             <EditPostIcon onClick={() => setDropdown(!dropdown)} />
 

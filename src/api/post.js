@@ -16,3 +16,16 @@ export const editPost = (postId, caption) =>
 
 export const deletePost = (postId) =>
   axios.patch("/posts/delete-post", { postId }); // Fake Delete
+
+// Likes
+
+export const likePost = (postId, userId) =>
+  axios.post(`/posts/like`, { postId, userId });
+
+export const unlikePost = (postId, userId) =>
+  axios.delete(`/posts/unlike`, { data: { postId, userId } });
+
+// Comments
+
+export const createComment = (comment, postId) =>
+  axios.post("/posts/comment", { comment, postId });

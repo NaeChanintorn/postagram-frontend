@@ -11,11 +11,11 @@ export default function HomePage() {
   const { userData } = useAuth();
   const [suggested, setSuggested] = useState([]);
 
-  const { getAllPostsInHomePage, allPosts } = usePost();
+  const { getAllPostsInHomePage, allPosts, postData, isClick } = usePost();
 
   useEffect(() => {
     getAllPostsInHomePage();
-  }, []);
+  }, [isClick]);
 
   useEffect(() => {
     suggestedRandom();
@@ -57,6 +57,7 @@ export default function HomePage() {
       createdAt={post.createdAt}
       postId={post.id}
       isDeleted={post.isDeleted}
+      like={post.likes}
     />
   ));
 

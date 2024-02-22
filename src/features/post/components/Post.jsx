@@ -17,6 +17,7 @@ export default function Post({
   id,
   postId,
   isDeleted,
+  like,
 }) {
   return (
     <>
@@ -35,7 +36,7 @@ export default function Post({
           <ImageOrVideo imageorvideo={imageorvideo} />
 
           {/* Button */}
-          <ButtonInPost />
+          <ButtonInPost postId={postId} like={like} />
 
           {/* Like */}
           <Like countLike={countLike} />
@@ -45,6 +46,7 @@ export default function Post({
             countComment={countComment}
             userName={userName}
             caption={caption}
+            postId={postId}
           />
 
           <hr className="text-gray-300" />

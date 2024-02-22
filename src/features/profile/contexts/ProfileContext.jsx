@@ -33,6 +33,10 @@ export default function ProfileContextProvider({ children }) {
     setPost(res.data.posts);
   };
 
+  const deleteFollow = async (id) => {
+    await followApi.unfollow(id);
+  };
+
   // useEffect(() => {
   //   const fetchProfile = async () => {
   //     try {
@@ -63,6 +67,7 @@ export default function ProfileContextProvider({ children }) {
         userProfile,
         getFollowCount,
         createFollow,
+        deleteFollow,
         setUserProfile,
         getPostCount,
         post,

@@ -1,16 +1,20 @@
 import React from "react";
 import { useState } from "react";
+import usePost from "../hooks/use-post";
 
-export default function Comment({ userName, caption, countComment }) {
-  const [input, setInput] = useState();
+export default function Comment({ userName, caption, countComment, postId }) {
+  const [input, setInput] = useState("");
+
+  const { createCommentContext } = usePost();
 
   const handleChangeInput = (e) => {
     setInput(e.target.value);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    // Comment Api
+    await createCommentContext(input, postId);
+    setInput("");
   };
 
   return (

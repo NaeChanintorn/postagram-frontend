@@ -16,18 +16,50 @@ import CountPost from "./CountPost";
 export default function Profile() {
   const [profile, setProfile] = useState({});
   const [editModal, setEditModal] = useState(false);
+  const [isClickFollow, setIsClickFollow] = useState(false);
 
   const { userId } = useParams();
   const { userData } = useAuth();
-  const { userProfile, follow, getFollowCount, setUserProfile } = useProfile();
+  const {
+    userProfile,
+    follow,
+    getFollowCount,
+    setUserProfile,
+    createFollow,
+    deleteFollow,
+  } = useProfile();
+  // console.log(userId);
 
   const visitingOwnProfile = userData && userData.id === userProfile.id;
   const visitingAnotherProfile = userData && userData.id !== userProfile.id;
 
-  const following = follow.filter((el) => +el.followerId === +userProfile?.id);
-  const follower = follow.filter((el) => +el.followingId === +userProfile?.id);
+  let following = {};
+  let follower = {};
+  let isFollow = {};
+
+  if (follow.length > 0) {
+    following = follow.filter((el) => +el?.followerId === +userProfile?.id);
+    follower = follow.filter((el) => +el?.followingId === +userProfile?.id);
+    // console.log(following, "following");
+
+    isFollow = follower.filter((el) => +el?.followerId === +userData.id);
+  }
+
+  // console.log(follow, "**************************");
+  // console.log(isFollow, "----------------------");
+
   // console.log(follower, following);
   // console.log(userProfile);
+
+  const onFollow = async () => {
+    setIsClickFollow((prev) => !prev);
+    await createFollow(userId);
+  };
+
+  const onUnFollow = async () => {
+    setIsClickFollow((prev) => !prev);
+    await deleteFollow(userId);
+  };
 
   // useEffect(() => {
   //   // console.log(follow);
@@ -40,7 +72,7 @@ export default function Profile() {
   //   };
   //   fetchMe();
   //   if (userData) {
-  //     getFollowCount(userData.id);
+  //     getFollowCount(userData?.id);
   //     // console.log(userData);
   //   }
   // }, [userData, follow]);
@@ -62,7 +94,7 @@ export default function Profile() {
       getFollowCount(userProfile.id);
       // console.log(userData);
     }
-  }, [userProfile, follow]);
+  }, [userProfile, follow, isClickFollow]);
 
   return (
     <div className="flex flex-row gap-32">
@@ -90,15 +122,23 @@ export default function Profile() {
             <EditProfileModal onClose={() => setEditModal(false)} />
           )}
           {visitingAnotherProfile && (
-            <button
-              onClick={() => setEditModal(true)}
-              className="bg-gray-200 text-sm font-medium px-4 py-2 rounded-lg "
-            >
-              Follow
-            </button>
-          )}
-          {editModal && (
-            <EditProfileModal onClose={() => setEditModal(false)} />
+            <>
+              {isFollow.length > 0 ? (
+                <button
+                  onClick={onUnFollow}
+                  className="bg-green-500 text-sm font-medium px-4 py-2 rounded-lg "
+                >
+                  Following
+                </button>
+              ) : (
+                <button
+                  onClick={onFollow}
+                  className="bg-gray-200 text-sm font-medium px-4 py-2 rounded-lg "
+                >
+                  Follow
+                </button>
+              )}
+            </>
           )}
         </div>
         <div className="flex flex-row gap-16">

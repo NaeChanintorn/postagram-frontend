@@ -8,9 +8,11 @@ export const PostContext = createContext();
 export default function PostContextProvider({ children }) {
   const [allPosts, setAllPosts] = useState([]);
   const [postData, setPostData] = useState(null);
+  const [commentData, setCommentData] = useState(null);
+  const [isClick, setIsClick] = useState(false);
 
   const getAllPostsInHomePage = async (postId, caption) => {
-    const res = await postApi.getAllPosts(caption);
+    const res = await postApi.getAllPosts();
     // console.log(res.data.posts, "*************");
     setAllPosts(res.data.posts);
   };
@@ -31,6 +33,29 @@ export default function PostContextProvider({ children }) {
     setPostData(res.data.post);
   };
 
+  // LIKES
+
+  const createLike = async (postId, userId) => {
+    // console.log(postId);
+    const res = await postApi.likePost(postId, userId);
+    // console.log(res);
+    // setPostData(res.data.like);
+    setIsClick((prev) => !prev);
+  };
+
+  const deleteLike = async (postId, userId) => {
+    // console.log(postId);
+    await postApi.unlikePost(postId, userId);
+    setIsClick((prev) => !prev);
+  };
+
+  // COMMENTS
+
+  const createCommentContext = async (comment, postId) => {
+    const res = await postApi.createComment(comment, postId);
+    setCommentData(res.data.newComment);
+  };
+
   return (
     <PostContext.Provider
       value={{
@@ -40,6 +65,11 @@ export default function PostContextProvider({ children }) {
         postData,
         deletePostInHomePage,
         createPostImage,
+        createLike,
+        deleteLike,
+        isClick,
+        createCommentContext,
+        commentData,
       }}
     >
       {children}
