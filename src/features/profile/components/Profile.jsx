@@ -27,11 +27,17 @@ export default function Profile() {
     setUserProfile,
     createFollow,
     deleteFollow,
+    countFollowingContext,
+    countFollowerContext,
+    countFollowingNumber,
+    countFollowerNumber,
   } = useProfile();
   // console.log(userId, "------------------");
 
   const visitingOwnProfile = userData && userData.id === userProfile.id;
   const visitingAnotherProfile = userData && userData.id !== userProfile.id;
+
+  // console.log(countFollowerNumber);
 
   let following = {};
   let follower = {};
@@ -60,6 +66,14 @@ export default function Profile() {
     setIsClickFollow((prev) => !prev);
     await deleteFollow(userId);
   };
+
+  // const countFollowing = async () => {
+  //   await countFollowingContext(userId);
+  // };
+
+  // const countFollower = async () => {
+  //   await countFollowerContext(userId);
+  // };
 
   // useEffect(() => {
   //   if (follow?.length > 0) {
@@ -128,7 +142,16 @@ export default function Profile() {
         <div className="flex flex-row gap-16">
           {/* Count post */}
           <CountPost />
-          <Follow follower={follower?.length} following={following?.length} />
+
+          {/* ************************************************* */}
+
+          {/* <Follow follower={follower?.length} following={following?.length} /> */}
+          <Follow
+            follower={countFollowerNumber}
+            following={countFollowingNumber}
+          />
+
+          {/* ************************************************** */}
         </div>
         <div className="flex flex-col gap-1">
           <div className="flex flex-row gap-1">

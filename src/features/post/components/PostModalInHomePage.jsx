@@ -4,6 +4,7 @@ import Avatar from "../../../components/Avatar";
 import useProfile from "../../profile/hooks/use-profile";
 import usePost from "../hooks/use-post";
 import formatTimeAgo from "../../../utilities/time-ago";
+import EditComment from "../../../components/EditComment";
 
 export default function PostModalInHomePage({
   onClose,
@@ -52,7 +53,12 @@ export default function PostModalInHomePage({
             <Avatar src={el.commenter.profileImage} />
           </div>
           <span>{el.commenter.userName}</span>
-          <span>{el.comment}</span>
+          <EditComment
+            postId={el.postId}
+            id={el.commenterId}
+            comment={el.comment}
+            commentId={el.id}
+          />
         </div>
         <div className="ml-14">
           <small>{formatTimeAgo(el.createdAt)}</small>

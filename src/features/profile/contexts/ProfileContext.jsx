@@ -12,6 +12,8 @@ export default function ProfileContextProvider({ children }) {
   const [userProfile, setUserProfile] = useState({});
   const [follow, setFollow] = useState([]);
   const [post, setPost] = useState([]);
+  const [countFollowingNumber, setCountFollowingNumber] = useState(0);
+  const [countFollowerNumber, setCountFollowerNumber] = useState(0);
 
   const { userData } = useAuth();
   const { userId } = useParams();
@@ -37,19 +39,40 @@ export default function ProfileContextProvider({ children }) {
     await followApi.unfollow(id);
   };
 
+  const countFollowingContext = async (id) => {
+    const res = await followApi.getCountFollowing(+id);
+    setCountFollowingNumber(res.data.count);
+    console.log(res.data.count);
+  };
+
+  const countFollowerContext = async (id) => {
+    console.log(".............");
+    const res = await followApi.getCountFollower(+id);
+    console.log(res.data.count);
+    setCountFollowerNumber(res.data.count);
+  };
+
+  countFollowingContext(+userId);
+  countFollowerContext(+userId);
+
   useEffect(() => {
-    if (follow.length > 0) {
-      return;
-    }
+    // if (!isNaN(follow.length)) {
+    //   return;
+    // }
     const fetchProfile = async () => {
       try {
         // console.log(userId);
+
         const res = await userApi.getProfileByTargetUserId(+userId);
+
         // getFollowCount();
         // console.log(res);
         // console.log(userData);
         setUserProfile(res.data.profileUser);
         // if (userProfile) {
+        if (!isNaN(follow.length)) {
+          return;
+        }
         getFollowCount(userProfile?.id);
         // console.log(userData);
         // }
@@ -79,6 +102,8 @@ export default function ProfileContextProvider({ children }) {
         setUserProfile,
         getPostCount,
         post,
+        countFollowingNumber,
+        countFollowerNumber,
       }}
     >
       {children}
