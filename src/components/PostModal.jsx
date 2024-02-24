@@ -76,7 +76,7 @@ export default function PostModal({
       <div className="z-5 fixed bg-black inset-0 opacity-65"></div>
       <div className="z-50 fixed inset-0">
         <div className="flex  items-center justify-center min-h-full">
-          <div className="bg-white  rounded-sm shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[95vh] w-[62.5vw] flex flex-col ">
+          <div className="bg-white  rounded-sm shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[95vh] w-[62.5vw] overflow-auto  flex flex-col ">
             <div className="flex flex-row h-full">
               <div className="w-3/5 h-full">
                 {checkImageOrVideo ? (

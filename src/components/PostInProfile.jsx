@@ -20,7 +20,7 @@ export default function PostInProfile({
         className=" bg-gray-200 w-[15vw] h-[32vh]  "
       >
         {checkImageOrVideo ? (
-          <video className="h-full w-full" src={src} />
+          <video className="h-full w-full z-0" src={src} />
         ) : (
           <img className="h-full w-full" src={src} alt="" />
         )}

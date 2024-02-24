@@ -12,7 +12,7 @@ export default function HomePage() {
   const [suggested, setSuggested] = useState([]);
   const [onClick, setOnClick] = useState(false);
 
-  console.log(suggested);
+  // console.log(suggested);
 
   const { getAllPostsInHomePage, allPosts, isClick } = usePost();
 
@@ -61,6 +61,7 @@ export default function HomePage() {
       postId={post.id}
       isDeleted={post.isDeleted}
       like={post.likes}
+      setIsClick={setOnClick}
     />
   ));
 

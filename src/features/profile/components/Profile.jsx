@@ -17,31 +17,29 @@ export default function Profile() {
   const { userId } = useParams();
   const [profile, setProfile] = useState(userId);
   const [editModal, setEditModal] = useState(false);
-  const [isClickFollow, setIsClickFollow] = useState(false);
+  const [isClickFollow, setIsClickFollow, isClick] = useState(false);
 
   const { userData } = useAuth();
   const {
     userProfile,
     follow,
-    getFollowCount,
-    setUserProfile,
     createFollow,
     deleteFollow,
-    countFollowingContext,
-    countFollowerContext,
     countFollowingNumber,
     countFollowerNumber,
+    setIsClick,
   } = useProfile();
   // console.log(userId, "------------------");
+  console.log(follow, "follow");
 
   const visitingOwnProfile = userData && userData.id === userProfile.id;
   const visitingAnotherProfile = userData && userData.id !== userProfile.id;
 
   // console.log(countFollowerNumber);
 
-  let following = {};
-  let follower = {};
-  let isFollow = {};
+  let following = [];
+  let follower = [];
+  let isFollow = [];
 
   if (follow.length > 0) {
     following = follow.filter((el) => +el?.followerId === +userProfile?.id);
@@ -58,41 +56,16 @@ export default function Profile() {
   // console.log(userProfile);
 
   const onFollow = async () => {
-    setIsClickFollow((prev) => !prev);
+    // setIsClickFollow((prev) => !prev);
     await createFollow(userId);
+    setIsClick((prev) => true);
   };
 
   const onUnFollow = async () => {
-    setIsClickFollow((prev) => !prev);
+    // setIsClickFollow((prev) => !prev);
     await deleteFollow(userId);
+    setIsClick((prev) => false);
   };
-
-  // const countFollowing = async () => {
-  //   await countFollowingContext(userId);
-  // };
-
-  // const countFollower = async () => {
-  //   await countFollowerContext(userId);
-  // };
-
-  // useEffect(() => {
-  //   if (follow?.length > 0) {
-  //     return;
-  //   }
-
-  //   const fetchProfile = async () => {
-  //     // const res = await userApi.getProfileByTargetUserId(+userId);
-  //     // console.log(userId);
-  //     // console.log(res, "55555555555555555555555555555555");
-  //     // console.log(userData);
-  //     // setUserProfile(res.data.profileUser);
-  //   };
-  //   fetchProfile();
-  //   if (userProfile) {
-  //     getFollowCount(userProfile.id);
-  //     // console.log(userData);
-  //   }
-  // }, [userProfile, isClickFollow, follow, profile]);
 
   return (
     <div className="flex flex-row gap-32">

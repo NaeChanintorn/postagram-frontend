@@ -12,6 +12,7 @@ export default function Comment({
   src,
   createdAt,
   like,
+  setIsClick,
 }) {
   const [input, setInput] = useState("");
   const [onClick, setOnClick] = useState(false);
@@ -25,6 +26,7 @@ export default function Comment({
   const handleSubmit = async (e) => {
     e.preventDefault();
     await createCommentContext(input, postId);
+    setIsClick((prev) => !prev);
     setInput("");
   };
 
@@ -64,7 +66,10 @@ export default function Comment({
             value={input}
             onChange={handleChangeInput}
           />
-          <button className="absolute top-3 right-3 text-sm font-semibold text-blue-400 hover:text-blue-600">
+          <button
+            // onClick={() => setIsClick((prev) => !prev)}
+            className="absolute top-3 right-3 text-sm font-semibold text-blue-400 hover:text-blue-600"
+          >
             post
           </button>
         </form>
@@ -78,7 +83,10 @@ export default function Comment({
             value={input}
             onChange={handleChangeInput}
           />
-          <button className="absolute top-3 right-3 text-sm font-semibold text-blue-400 hover:text-blue-600 hidden">
+          <button
+            // onClick={() => setIsClick((prev) => !prev)}
+            className="absolute top-3 right-3 text-sm font-semibold text-blue-400 hover:text-blue-600 hidden"
+          >
             post
           </button>
         </form>

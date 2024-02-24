@@ -14,7 +14,9 @@ export default function ProfileContextProvider({ children }) {
   const [post, setPost] = useState([]);
   const [countFollowingNumber, setCountFollowingNumber] = useState(0);
   const [countFollowerNumber, setCountFollowerNumber] = useState(0);
+  const [isClick, setIsClick] = useState(false);
 
+  // console.log(userProfile);
   const { userData } = useAuth();
   const { userId } = useParams();
 
@@ -22,6 +24,7 @@ export default function ProfileContextProvider({ children }) {
 
   const getFollowCount = async (userId) => {
     const res = await followApi.getAllFollow(userId);
+    console.log(res.data.isFollow, "...............");
     setFollow(res.data.isFollow);
   };
 
@@ -30,35 +33,33 @@ export default function ProfileContextProvider({ children }) {
     setFollow(res.data);
   };
 
+  const deleteFollow = async (id) => {
+    await followApi.unfollow(id);
+  };
+
   const getPostCount = async (userId) => {
     const res = await postApi.getAllPostsForEachUser(+userId);
     setPost(res.data.posts);
   };
 
-  const deleteFollow = async (id) => {
-    await followApi.unfollow(id);
-  };
-
   const countFollowingContext = async (id) => {
     const res = await followApi.getCountFollowing(+id);
     setCountFollowingNumber(res.data.count);
-    console.log(res.data.count);
+    // console.log(res.data.count);
   };
 
   const countFollowerContext = async (id) => {
-    console.log(".............");
+    // console.log(".............");
     const res = await followApi.getCountFollower(+id);
-    console.log(res.data.count);
+    // console.log(res.data.count);
     setCountFollowerNumber(res.data.count);
   };
 
+  // getFollowCount(userProfile?.id);
   countFollowingContext(+userId);
   countFollowerContext(+userId);
 
   useEffect(() => {
-    // if (!isNaN(follow.length)) {
-    //   return;
-    // }
     const fetchProfile = async () => {
       try {
         // console.log(userId);
@@ -71,25 +72,22 @@ export default function ProfileContextProvider({ children }) {
         setUserProfile(res.data.profileUser);
         // if (userProfile) {
         if (!isNaN(follow.length)) {
+          // console.log("test");
           return;
         }
-        getFollowCount(userProfile?.id);
-        // console.log(userData);
+
+        // getFollowCount(userProfile?.id);
         // }
       } catch (error) {
         toast.error(error.response?.data.message);
       }
     };
     fetchProfile();
-  }, [userId, follow]);
+  }, [userId, isClick]);
 
-  // useEffect(() => {
-  //   if (userProfile) {
-  //     if (+userId === userProfile.id) {
-  //       setUserProfile(userProfile);
-  //     }
-  //   }
-  // }, [userId, userProfile]);
+  useEffect(() => {
+    getFollowCount(userProfile?.id);
+  }, [isClick]);
 
   return (
     <ProfileContext.Provider
@@ -104,6 +102,7 @@ export default function ProfileContextProvider({ children }) {
         post,
         countFollowingNumber,
         countFollowerNumber,
+        setIsClick,
       }}
     >
       {children}

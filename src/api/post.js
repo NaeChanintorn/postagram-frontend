@@ -14,8 +14,8 @@ export const createPostVideo = (formData) =>
 export const editPost = (postId, caption) =>
   axios.patch(`/posts/edit-post`, { postId, caption });
 
-export const deletePost = (postId) =>
-  axios.patch("/posts/delete-post", { postId }); // Fake Delete
+export const deletePost = (postId, isDeleted) =>
+  axios.patch("/posts/delete-post", { postId, isDeleted }); // Fake Delete
 
 // Likes
 

@@ -56,7 +56,7 @@ export function CreateModal({ onClose }) {
       <div className="z-5 fixed bg-black inset-0 opacity-65"></div>
       <div className="z-10 fixed inset-0">
         <div className="flex  items-center justify-center min-h-full py-8">
-          <div className="bg-white  rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
+          <div className="bg-white overflow-auto rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
             <div className="border-b flex  justify-between p-4">
               <button className="font-bold invisible">&#10005;</button>
               <h1 className="text-lg font-semibold">Create new post</h1>
@@ -76,8 +76,8 @@ export function CreateModal({ onClose }) {
             />
             <form className="h-[80vh]">
               {file ? (
-                <div className="flex flex-col justify-center items-center gap-10 ">
-                  <div className="h-[55vh] w-[37.5vw] bg-gray-300 flex items-center justify-center">
+                <div className="flex flex-col justify-center items-center gap-7 ">
+                  <div className="h-[50vh] w-[37.5vw] bg-gray-300 flex items-center justify-center">
                     {file.name.endsWith("mp4" || "MPEG-4") ? (
                       <video
                         className="w-full h-full"
@@ -99,7 +99,7 @@ export function CreateModal({ onClose }) {
                       onChange={(e) => setCaption(e.target.value)}
                     />
                   </div>
-                  <div className="flex flex-row justify-center w-3/5 gap-24">
+                  <div className="flex flex-row justify-center w-3/5 gap-24 ">
                     <Button
                       onClick={() => {
                         setFile(null);

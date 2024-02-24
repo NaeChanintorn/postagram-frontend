@@ -8,7 +8,14 @@ import useAuth from "../../../hooks/use-auth";
 import usePost from "../hooks/use-post";
 import { toast } from "react-toastify";
 
-export default function PostHeader({ userName, src, createdAt, id, postId }) {
+export default function PostHeader({
+  setIsClick,
+  userName,
+  src,
+  createdAt,
+  id,
+  postId,
+}) {
   const [dropdown, setDropdown] = useState(false);
   const [isEdit, setIsEdit] = useState(false);
   const { userData } = useAuth();
@@ -17,12 +24,13 @@ export default function PostHeader({ userName, src, createdAt, id, postId }) {
   // console.log(userData.posts);
   // console.log(allPosts);
 
-  const handleDeletePost = (e) => {
+  const handleDeletePost = async (e) => {
     try {
       // console.log("---------------------------");
       e.preventDefault();
       // console.log(postId);
-      deletePostInHomePage(postId);
+      await deletePostInHomePage(postId);
+      setIsClick((prev) => !prev);
       toast.success("Delete post success");
     } catch (error) {
       toast.error(error.response?.data.message);
@@ -54,7 +62,11 @@ export default function PostHeader({ userName, src, createdAt, id, postId }) {
               />
             )}
             {isEdit && (
-              <EditPostModal postId={postId} onClose={() => setIsEdit(false)} />
+              <EditPostModal
+                setIsClick={setIsClick}
+                postId={postId}
+                onClose={() => setIsEdit(false)}
+              />
             )}
           </div>
         ) : null}

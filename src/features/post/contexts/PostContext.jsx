@@ -24,9 +24,11 @@ export default function PostContextProvider({ children }) {
     setPostData((prev) => ({ ...prev, caption: res.data.caption }));
   };
 
-  const deletePostInHomePage = async (postId) => {
+  const deletePostInHomePage = async (postId, isDeleted) => {
+    const res = await postApi.deletePost(postId, isDeleted);
+    // console.log(res, "----------------");
     // console.log(postId);
-    await postApi.deletePost(postId);
+    setPostData((prev) => ({ ...prev, isDeleted: res.data.isDeleted }));
   };
 
   const createPostImage = async (image, caption) => {
@@ -54,8 +56,8 @@ export default function PostContextProvider({ children }) {
 
   const createCommentContext = async (comment, postId) => {
     const res = await postApi.createComment(comment, postId);
-    getCommentContext(postId);
     setCommentData(res.data.newComment);
+    getCommentContext(postId);
   };
 
   const getCommentContext = async (postId) => {
@@ -69,6 +71,10 @@ export default function PostContextProvider({ children }) {
     setCommentData((prev) => ({ ...prev, comment: res.data.edit.comment }));
   };
 
+  // useEffect(() => {
+  //   getCommentContext();
+  // }, [isClick]);
+
   return (
     <PostContext.Provider
       value={{
@@ -81,6 +87,7 @@ export default function PostContextProvider({ children }) {
         createLike,
         deleteLike,
         isClick,
+        setIsClick,
         createCommentContext,
         commentData,
         getCommentContext,

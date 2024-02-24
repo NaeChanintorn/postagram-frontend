@@ -18,6 +18,7 @@ export default function Post({
   postId,
   isDeleted,
   like,
+  setIsClick,
 }) {
   // console.log(imageorvideo);
   return (
@@ -31,6 +32,7 @@ export default function Post({
             src={src}
             createdAt={createdAt}
             id={id}
+            setIsClick={setIsClick}
           />
 
           {/* Image */}
@@ -52,6 +54,7 @@ export default function Post({
             createdAt={createdAt}
             like={like}
             src={src}
+            setIsClick={setIsClick}
           />
 
           <hr className="text-gray-300" />

@@ -7,7 +7,7 @@ import { useEffect } from "react";
 
 export default function ButtonInPost({ like, postId }) {
   // console.log(like);
-  const [isClickLike, setIsClickLike] = useState(false);
+  // const [isClickLike, setIsClickLike] = useState(false);
   const { userData } = useAuth();
   const { createLike, deleteLike } = usePost();
 
@@ -16,12 +16,12 @@ export default function ButtonInPost({ like, postId }) {
 
   const onLike = async () => {
     await createLike(postId, userData?.id);
-    setIsClickLike((prev) => !prev);
+    // setIsClickLike((prev) => !prev);
   };
 
   const onUnlike = async () => {
     await deleteLike(postId, userData?.id);
-    setIsClickLike((prev) => !prev);
+    // setIsClickLike((prev) => !prev);
   };
 
   return (

@@ -6,7 +6,7 @@ import { useState } from "react";
 import Editform from "./Editform";
 import usePost from "../hooks/use-post";
 
-export function EditPostModal({ onClose, postId }) {
+export function EditPostModal({ setIsClick, onClose, postId }) {
   const { userData } = useAuth();
   const { editPostInHomePage } = usePost();
   const [caption, setCaption] = useState(userData?.caption);
@@ -15,7 +15,9 @@ export function EditPostModal({ onClose, postId }) {
     try {
       e.preventDefault();
       await editPostInHomePage(postId, caption);
+      setIsClick((prev) => !prev);
       toast.success("Edit post success");
+      onClose();
     } catch (error) {
       toast.error(error.response?.data.message);
     }
@@ -26,7 +28,7 @@ export function EditPostModal({ onClose, postId }) {
       <div className="z-5 fixed bg-black inset-0 opacity-65"></div>
       <div className="z-10 fixed inset-0">
         <div className="flex  items-center justify-center min-h-full py-8">
-          <div className="bg-white  rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
+          <div className="bg-white overflow-auto   rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
             <div className="border-b flex  justify-between p-4">
               <button className="font-bold invisible">&#10005;</button>
               <h1 className="text-lg font-semibold">Edit Post</h1>

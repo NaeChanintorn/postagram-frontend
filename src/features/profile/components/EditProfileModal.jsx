@@ -10,7 +10,7 @@ import useProfile from "../hooks/use-profile";
 
 export function EditProfileModal({ onClose }) {
   const { userData, updateUser, updateUserBioContext } = useAuth();
-  const { userProfile } = useProfile();
+  const { userProfile, setIsClick } = useProfile();
   const [profileImage, setProfileImage] = useState(null);
   const [bio, setBio] = useState(userProfile?.bio);
   const [loading, setLoading] = useState(false);
@@ -19,6 +19,7 @@ export function EditProfileModal({ onClose }) {
   const updateProfileImage = async () => {
     const formData = new FormData();
     formData.append("profileImage", profileImage);
+    // setIsClick((prev) => !prev);
     // console.log(profileImage);
     // formData.getAll("profileImage");
     await updateUser(formData);
@@ -28,6 +29,8 @@ export function EditProfileModal({ onClose }) {
     try {
       setLoading(true);
       await updateProfileImage(profileImage);
+      toast.success("Updated your profile image");
+      setIsClick((prev) => !prev);
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {
@@ -41,6 +44,7 @@ export function EditProfileModal({ onClose }) {
       e.preventDefault();
       await updateUserBioContext(bio);
       toast.success("Edit bio success");
+      setIsClick((prev) => !prev);
     } catch (error) {
       toast.error(error.response?.data.message);
     }
@@ -48,10 +52,10 @@ export function EditProfileModal({ onClose }) {
 
   return (
     <>
-      <div className="fixed bg-black inset-0 opacity-65"></div>
-      <div className="fixed inset-0">
-        <div className="flex  items-center justify-center min-h-full py-8">
-          <div className="bg-white  rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
+      <div className="z-10 fixed bg-black inset-0 opacity-65"></div>
+      <div className="z-50 fixed inset-0">
+        <div className="flex items-center justify-center min-h-full py-8">
+          <div className="bg-white overflow-auto   rounded-xl shadow-[0_0_15px_rgb(0,0,0,0.2)] h-[81vh] w-[37.5vw] flex flex-col">
             <div className="border-b flex  justify-between p-4">
               <button className="font-bold invisible">&#10005;</button>
               <h1 className="text-lg font-semibold">Edit Profile</h1>

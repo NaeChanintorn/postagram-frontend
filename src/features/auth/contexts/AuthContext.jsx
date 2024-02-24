@@ -12,6 +12,7 @@ export const AuthContext = createContext();
 export default function AuthContextProvider({ children }) {
   const [userData, setUserData] = useState(null);
   const [authenticated, setAuthenticated] = useState(getToken() ? true : null);
+  const [isClick, setIsClick] = useState(false);
 
   useEffect(() => {
     if (authenticated) {
@@ -65,6 +66,7 @@ export default function AuthContextProvider({ children }) {
         authenticated,
         updateUser,
         updateUserBioContext,
+        setIsClick,
       }}
     >
       {children}
