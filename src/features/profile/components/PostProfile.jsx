@@ -13,12 +13,19 @@ export default function PostProfile() {
   const { userId } = useParams();
   // console.log(userProfile, "..............");
 
+  const { userProfile } = useProfile();
+
   useEffect(() => {
     const fetchPosts = async () => {
+      // const isNotDeleted = userProfile?.posts?.filter(
+      //   (el) => el?.isDeleted === false
+      // );
       const res = await userApi.getProfileByTargetUserId(userId);
       // console.log(res.data);
-      setPosts(res.data.profileUser.posts);
+      // setPosts(res.data.profileUser?.posts && isNotDeleted);
+      setPosts(res.data?.profileUser?.posts);
     };
+
     fetchPosts();
   }, [userId]);
 

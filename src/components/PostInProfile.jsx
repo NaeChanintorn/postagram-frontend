@@ -1,5 +1,6 @@
 import { useState } from "react";
 import PostModal from "./PostModal";
+import useProfile from "../features/profile/hooks/use-profile";
 
 export default function PostInProfile({
   src,

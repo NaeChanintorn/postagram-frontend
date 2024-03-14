@@ -17,7 +17,7 @@ export default function Profile() {
   const { userId } = useParams();
   const [profile, setProfile] = useState(userId);
   const [editModal, setEditModal] = useState(false);
-  const [isClickFollow, setIsClickFollow, isClick] = useState(false);
+  const [isClickFollow, setIsClickFollow] = useState(false);
 
   const { userData } = useAuth();
   const {
@@ -28,9 +28,11 @@ export default function Profile() {
     countFollowingNumber,
     countFollowerNumber,
     setIsClick,
+    isClick,
+    getProfile,
   } = useProfile();
-  // console.log(userId, "------------------");
-  console.log(follow, "follow");
+  console.log(userId, "------------------");
+  // console.log(follow, "follow");
 
   const visitingOwnProfile = userData && userData.id === userProfile.id;
   const visitingAnotherProfile = userData && userData.id !== userProfile.id;
@@ -58,13 +60,19 @@ export default function Profile() {
   const onFollow = async () => {
     // setIsClickFollow((prev) => !prev);
     await createFollow(userId);
-    setIsClick((prev) => true);
+    setIsClick(() => true);
+    // getProfile(userProfile?.id);
+    await getProfile(userId);
   };
 
   const onUnFollow = async () => {
     // setIsClickFollow((prev) => !prev);
+
+    // setIsClick(() => true);
     await deleteFollow(userId);
-    setIsClick((prev) => false);
+    setIsClick(() => false);
+    // getProfile(userProfile?.id);
+    await getProfile(userId);
   };
 
   return (

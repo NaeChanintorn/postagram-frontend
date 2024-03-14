@@ -33,7 +33,9 @@ const router = createBrowserRouter([
 
     element: (
       <ProtectedRoute>
-        <SetOutlet />
+        <PostContextProvider>
+          <SetOutlet />
+        </PostContextProvider>
       </ProtectedRoute>
     ),
     children: [

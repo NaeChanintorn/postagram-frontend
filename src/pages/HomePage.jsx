@@ -6,19 +6,24 @@ import * as userApi from "../api/user";
 import { ProfileContext } from "../features/profile/contexts/ProfileContext";
 import Post from "../features/post/components/Post";
 import usePost from "../features/post/hooks/use-post";
+import PostRender from "../features/post/components/PostRender";
+import Loading from "../components/Loading";
 
 export default function HomePage() {
   const { userData } = useAuth();
   const [suggested, setSuggested] = useState([]);
   const [onClick, setOnClick] = useState(false);
+  const { getAllPostsInHomePage, allPosts, setIsClick, isClick } = usePost();
 
   // console.log(suggested);
 
-  const { getAllPostsInHomePage, allPosts, isClick } = usePost();
+  // useEffect(() => {
+  //   getAllPostsInHomePage();
+  // }, [isClick, onClick]);
 
-  useEffect(() => {
-    getAllPostsInHomePage();
-  }, [isClick, onClick]);
+  // useEffect(() => {
+  //   // reload();
+  // }, [allPosts.length]);
 
   useEffect(() => {
     suggestedRandom();
@@ -43,33 +48,17 @@ export default function HomePage() {
     />
   ));
   // console.log(suggestedRender, "****************");
-
-  // Posts AllUsers
-
-  const PostInHomePageRender = allPosts.map((post) => (
-    // console.log(post)
-    <Post
-      key={post.id}
-      id={post.posterId}
-      userName={post.poster.userName}
-      src={post.poster.profileImage}
-      imageorvideo={post.imageOrVideo}
-      caption={post.caption}
-      countLike={post.likes.length}
-      countComment={post.comments.length}
-      createdAt={post.createdAt}
-      postId={post.id}
-      isDeleted={post.isDeleted}
-      like={post.likes}
-      setIsClick={setOnClick}
-    />
-  ));
+  // if (loading) {
+  //   return <Loading />;
+  // }
 
   return (
     // width sidebar = 17.5 vw width searchbar = 24.5 vw
     <div className="overflow-auto flex flex-row w-[100vw] justify-between">
       <div className="w-[25vw] invisible">invicible</div>
-      <div className="flex flex-col gap-3 mt-5">{PostInHomePageRender}</div>
+      <div className="flex flex-col gap-3 mt-5">
+        <PostRender setOnClick={setIsClick} isClick={isClick} />
+      </div>
       {/* Profile and Suggested Users */}
       <div className="w-[30vw] mt-10 flex flex-col gap-8">
         {/*  ME */}
@@ -81,7 +70,7 @@ export default function HomePage() {
           lastName={userData?.lastName}
         />
         <h1 className="text-sm text-gray-500 font-medium ">
-          Suggested for you
+          {onClick}Suggested for you
         </h1>
         {/* Suggested Users */}
         <div className="flex flex-col gap-5">{suggestedRender}</div>

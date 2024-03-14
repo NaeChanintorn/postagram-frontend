@@ -19,12 +19,14 @@ export default function Post({
   isDeleted,
   like,
   setIsClick,
+  onClick,
 }) {
   // console.log(imageorvideo);
   return (
     <>
       {isDeleted ? null : (
         <div className="w-[25vw] h-[90vh] flex flex-col">
+          {onClick}
           {/* Header */}
           <PostHeader
             postId={postId}

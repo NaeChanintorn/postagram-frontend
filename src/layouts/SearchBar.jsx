@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useProfile from "../features/profile/hooks/use-profile";
+import usePost from "../features/post/hooks/use-post";
 
 const defaultClassName =
   "hover:cursor-pointer hover:bg-gray-100 flex justify-center items-center rounded-lg p-3 mx-3";
@@ -34,6 +35,8 @@ export default function SearchBar() {
   const [userId, setUserId] = useState(null);
 
   const { logout, userData } = useAuth();
+
+  const { setIsClick } = usePost();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
@@ -95,7 +98,10 @@ export default function SearchBar() {
                 </div>
                 {modal && (
                   <div className="z-50">
-                    <CreateModal onClose={() => setModal(false)} />
+                    <CreateModal
+                      setIsClick={setIsClick}
+                      onClose={() => setModal(false)}
+                    />
                   </div>
                 )}
 

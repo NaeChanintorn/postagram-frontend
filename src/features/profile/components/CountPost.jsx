@@ -4,6 +4,10 @@ import * as userApi from "../../../api/user";
 export default function CountPost() {
   const { userProfile } = useProfile();
 
+  // console.log(userProfile);
+
+  // const isDeleted = userProfile?.posts?.filter((el) => el.isDeleted === false);
+  // const countPost = isDeleted?.length;
   const countPost = userProfile?.posts?.length;
 
   return (

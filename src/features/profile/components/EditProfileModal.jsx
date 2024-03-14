@@ -12,7 +12,7 @@ export function EditProfileModal({ onClose }) {
   const { userData, updateUser, updateUserBioContext } = useAuth();
   const { userProfile, setIsClick } = useProfile();
   const [profileImage, setProfileImage] = useState(null);
-  const [bio, setBio] = useState(userProfile?.bio);
+  const [bio, setBio] = useState(userProfile?.bio || "");
   const [loading, setLoading] = useState(false);
   const imageRef = useRef(null);
 
@@ -44,6 +44,7 @@ export function EditProfileModal({ onClose }) {
       e.preventDefault();
       await updateUserBioContext(bio);
       toast.success("Edit bio success");
+      setBio("");
       setIsClick((prev) => !prev);
     } catch (error) {
       toast.error(error.response?.data.message);

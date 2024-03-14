@@ -2,26 +2,35 @@ import { useRef } from "react";
 import { PhotoIcon } from "../icons/Icons";
 import Button from "./Button";
 import { useState } from "react";
-import * as postApi from "../api/post";
 import { toast } from "react-toastify";
+import usePost from "../features/post/hooks/use-post";
+import Loading from "./Loading";
 
 export function CreateModal({ onClose }) {
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState("");
-  const [loading, setLoading] = useState(false);
-  const [createPost, setCreatePost] = useState(null);
+  // const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
 
+  const {
+    createPostImageContext,
+    createPostVideoContext,
+    getAllPostsInHomePage,
+    setIsClick,
+    loading,
+    setLoading,
+  } = usePost();
+
+  const reload = () => {
+    location.reload();
+  };
+
   const createImage = async (formData) => {
-    // console.log(image);
-    // console.log(image.getAll("imageOrVideo"), "-------------------------");
-    const res = await postApi.createPostImage(formData);
-    setCreatePost(res.data);
+    await createPostImageContext(formData);
   };
 
   const createVideo = async (formData) => {
-    const res = await postApi.createPostVideo(formData);
-    setCreatePost(res.data);
+    await createPostVideoContext(formData);
   };
 
   const createPostFile = async () => {
@@ -29,7 +38,7 @@ export function CreateModal({ onClose }) {
     formData.append("caption", caption);
     formData.append("imageOrVideo", file);
     // console.log(formData.getAll("imageOrVideo"), "-------------------");
-    console.log(file);
+    // console.log(file);
     if (file.name.endsWith("mp4" || "MPEG-4")) {
       await createVideo(formData);
     } else {
@@ -37,12 +46,16 @@ export function CreateModal({ onClose }) {
     }
   };
 
-  const handleSubmit = async () => {
+  const handleSubmit = async (e) => {
     try {
-      // e.preventDefault();
+      e.preventDefault();
       // console.log(file);
       setLoading(true);
       await createPostFile();
+      await getAllPostsInHomePage();
+      setIsClick((prev) => !prev);
+      toast.success("post success");
+      // reload();
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {
@@ -53,6 +66,7 @@ export function CreateModal({ onClose }) {
 
   return (
     <>
+      {/* {loader && <Loading />} */}
       <div className="z-5 fixed bg-black inset-0 opacity-65"></div>
       <div className="z-10 fixed inset-0">
         <div className="flex  items-center justify-center min-h-full py-8">
@@ -74,65 +88,69 @@ export function CreateModal({ onClose }) {
                 }
               }}
             />
-            <form className="h-[80vh]">
-              {file ? (
-                <div className="flex flex-col justify-center items-center gap-7 ">
-                  <div className="h-[50vh] w-[37.5vw] bg-gray-300 flex items-center justify-center">
-                    {file.name.endsWith("mp4" || "MPEG-4") ? (
-                      <video
-                        className="w-full h-full"
-                        src={URL.createObjectURL(file)}
+            <>
+              {loading && <Loading />}
+              <form className="h-[80vh]">
+                {file ? (
+                  <div className="flex flex-col justify-center items-center gap-7 ">
+                    <div className="h-[50vh] w-[37.5vw] bg-gray-300 flex items-center justify-center">
+                      {file.name.endsWith("mp4" || "MPEG-4") ? (
+                        <video
+                          className="w-full h-full"
+                          src={URL.createObjectURL(file)}
+                        />
+                      ) : (
+                        <img
+                          className="w-full h-full"
+                          src={URL.createObjectURL(file)}
+                        />
+                      )}
+                    </div>
+                    <div className="w-4/5 -m-1">
+                      <input
+                        placeholder="Caption"
+                        type="text"
+                        className="w-full border border-gray-500 p-1 rounded-lg focus:outline-none"
+                        value={caption}
+                        onChange={(e) => setCaption(e.target.value)}
                       />
-                    ) : (
-                      <img
-                        className="w-full h-full"
-                        src={URL.createObjectURL(file)}
+                    </div>
+                    <div className="flex flex-row justify-center w-3/5 gap-24 ">
+                      <Button
+                        type="button"
+                        onClick={() => {
+                          setFile(null);
+                          fileRef.current.value = "";
+                        }}
+                        extendClassName="w-[10vw]"
+                        text="Cancel"
                       />
-                    )}
+                      <Button
+                        onClick={handleSubmit}
+                        type="button"
+                        extendClassName="w-[10vw]"
+                        text="Post"
+                      />
+                    </div>
                   </div>
-                  <div className="w-4/5 -m-1">
-                    <input
-                      placeholder="Caption"
-                      type="text"
-                      className="w-full border border-gray-500 p-1 rounded-lg focus:outline-none"
-                      value={caption}
-                      onChange={(e) => setCaption(e.target.value)}
-                    />
+                ) : (
+                  <div className="overflow-auto flex flex-col items-center justify-center h-full gap-6">
+                    <PhotoIcon />
+                    <h1 className="text-xl font-normal">
+                      Drag photos and videos here
+                    </h1>
+                    <div>
+                      <Button
+                        type="button"
+                        text="Select from computer"
+                        extendClassName="w-full p-5"
+                        onClick={() => fileRef.current.click()}
+                      />
+                    </div>
                   </div>
-                  <div className="flex flex-row justify-center w-3/5 gap-24 ">
-                    <Button
-                      onClick={() => {
-                        setFile(null);
-                        fileRef.current.value = "";
-                      }}
-                      extendClassName="w-[10vw]"
-                      text="Cancel"
-                    />
-                    <Button
-                      onClick={handleSubmit}
-                      type="button"
-                      extendClassName="w-[10vw]"
-                      text="Post"
-                    />
-                  </div>
-                </div>
-              ) : (
-                <div className="overflow-auto flex flex-col items-center justify-center h-full gap-6">
-                  <PhotoIcon />
-                  <h1 className="text-xl font-normal">
-                    Drag photos and videos here
-                  </h1>
-                  <div>
-                    <Button
-                      type="button"
-                      text="Select from computer"
-                      extendClassName="w-full p-5"
-                      onClick={() => fileRef.current.click()}
-                    />
-                  </div>
-                </div>
-              )}
-            </form>
+                )}
+              </form>
+            </>
           </div>
         </div>
       </div>

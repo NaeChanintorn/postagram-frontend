@@ -11,11 +11,16 @@ export default function PostContextProvider({ children }) {
   const [postData, setPostData] = useState(null);
   const [commentData, setCommentData] = useState(null);
   const [isClick, setIsClick] = useState(false);
+  const [loading, setLoading] = useState(false);
 
-  const getAllPostsInHomePage = async (postId, caption) => {
-    const res = await postApi.getAllPosts();
-    // console.log(res.data.posts, "*************");
-    setAllPosts(res.data.posts);
+  const getAllPostsInHomePage = async () => {
+    try {
+      const res = await postApi.getAllPosts();
+      console.log(res.data.posts, "context");
+      setAllPosts(res.data.posts);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const editPostInHomePage = async (postId, caption) => {
@@ -31,18 +36,25 @@ export default function PostContextProvider({ children }) {
     setPostData((prev) => ({ ...prev, isDeleted: res.data.isDeleted }));
   };
 
-  const createPostImage = async (image, caption) => {
-    const res = await postApi.createPostImage(image, caption);
+  const createPostImageContext = async (formData) => {
+    const res = await postApi.createPostImage(formData);
+    // console.log(res.data);
+    // await getAllPostsInHomePage();
     setPostData(res.data.post);
+  };
+
+  const createPostVideoContext = async (formData) => {
+    const res = await postApi.createPostVideo(formData);
+    setPostData(res.data.post);
+    // await getAllPostsInHomePage();
   };
 
   // LIKES
 
   const createLike = async (postId, userId) => {
     // console.log(postId);
-    const res = await postApi.likePost(postId, userId);
+    await postApi.likePost(postId, userId);
     // console.log(res);
-    // setPostData(res.data.like);
     setIsClick((prev) => !prev);
   };
 
@@ -71,9 +83,9 @@ export default function PostContextProvider({ children }) {
     setCommentData((prev) => ({ ...prev, comment: res.data.edit.comment }));
   };
 
-  // useEffect(() => {
-  //   getCommentContext();
-  // }, [isClick]);
+  useEffect(() => {
+    getAllPostsInHomePage();
+  }, [isClick, postData]);
 
   return (
     <PostContext.Provider
@@ -83,7 +95,8 @@ export default function PostContextProvider({ children }) {
         editPostInHomePage,
         postData,
         deletePostInHomePage,
-        createPostImage,
+        createPostImageContext,
+        createPostVideoContext,
         createLike,
         deleteLike,
         isClick,
@@ -92,6 +105,8 @@ export default function PostContextProvider({ children }) {
         commentData,
         getCommentContext,
         editCommentContext,
+        loading,
+        setLoading,
       }}
     >
       {children}

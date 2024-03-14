@@ -24,17 +24,20 @@ export default function ProfileContextProvider({ children }) {
 
   const getFollowCount = async (userId) => {
     const res = await followApi.getAllFollow(userId);
-    console.log(res.data.isFollow, "...............");
+    // console.log(res.data.isFollow, "...............");
     setFollow(res.data.isFollow);
   };
 
   const createFollow = async (id) => {
     const res = await followApi.createFollow(id);
+    // console.log(res.data);
     setFollow(res.data);
   };
 
   const deleteFollow = async (id) => {
-    await followApi.unfollow(id);
+    const res = await followApi.unfollow(id);
+    // console.log(res.data, "unfollow");
+    getFollowCount();
   };
 
   const getPostCount = async (userId) => {
@@ -53,6 +56,11 @@ export default function ProfileContextProvider({ children }) {
     const res = await followApi.getCountFollower(+id);
     // console.log(res.data.count);
     setCountFollowerNumber(res.data.count);
+  };
+
+  const getProfile = async (userId) => {
+    const res = await userApi.getProfileByTargetUserId(+userId);
+    setUserProfile(res.data.profileUser);
   };
 
   // getFollowCount(userProfile?.id);
@@ -103,6 +111,7 @@ export default function ProfileContextProvider({ children }) {
         countFollowingNumber,
         countFollowerNumber,
         setIsClick,
+        getProfile,
       }}
     >
       {children}
