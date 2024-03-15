@@ -1,10 +1,8 @@
-import { useEffect } from "react";
 import ButtonInPost from "./ButtonInPost";
 import Comment from "./Comment";
 import ImageOrVideo from "./ImageOrVideo";
 import Like from "./Like";
 import PostHeader from "./PostHeader";
-import usePost from "../hooks/use-post";
 
 export default function Post({
   userName,
@@ -21,7 +19,6 @@ export default function Post({
   setIsClick,
   onClick,
 }) {
-  // console.log(imageorvideo);
   return (
     <>
       {isDeleted ? null : (

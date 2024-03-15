@@ -9,13 +9,11 @@ import Loading from "./Loading";
 export function CreateModal({ onClose }) {
   const [file, setFile] = useState(null);
   const [caption, setCaption] = useState("");
-  // const [loading, setLoading] = useState(false);
   const fileRef = useRef(null);
 
   const {
     createPostImageContext,
     createPostVideoContext,
-    getAllPostsInHomePage,
     setIsClick,
     loading,
     setLoading,
@@ -37,8 +35,6 @@ export function CreateModal({ onClose }) {
     const formData = new FormData();
     formData.append("caption", caption);
     formData.append("imageOrVideo", file);
-    // console.log(formData.getAll("imageOrVideo"), "-------------------");
-    // console.log(file);
     if (file.name.endsWith("mp4" || "MPEG-4")) {
       await createVideo(formData);
     } else {
@@ -49,12 +45,10 @@ export function CreateModal({ onClose }) {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      // console.log(file);
       setLoading(true);
       await createPostFile();
       setIsClick((prev) => !prev);
       toast.success("post success");
-      // reload();
     } catch (error) {
       toast.error(error.response?.data.message);
     } finally {

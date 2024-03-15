@@ -1,6 +1,4 @@
 import { toast } from "react-toastify";
-import Avatar from "../../../components/Avatar";
-import Button from "../../../components/Button";
 import useAuth from "../../../hooks/use-auth";
 import { useState } from "react";
 import Editform from "./Editform";

@@ -13,12 +13,9 @@ export default function PostContextProvider({ children }) {
   const [isClick, setIsClick] = useState(false);
   const [loading, setLoading] = useState(false);
 
-  console.log(allPosts, "allPostsContext");
-
   const getAllPostsInHomePage = async () => {
     try {
       const res = await postApi.getAllPosts();
-      // console.log(res.data.posts, "context");
       setAllPosts(res.data.posts);
     } catch (error) {
       console.log(error);
@@ -27,44 +24,32 @@ export default function PostContextProvider({ children }) {
 
   const editPostInHomePage = async (postId, caption) => {
     const res = await postApi.editPost(postId, caption);
-    // console.log(res);
     setPostData((prev) => ({ ...prev, caption: res.data.caption }));
   };
 
   const deletePostInHomePage = async (postId, isDeleted) => {
     const res = await postApi.deletePost(postId, isDeleted);
-    // console.log(res, "----------------");
-    // console.log(postId);
     setPostData((prev) => ({ ...prev, isDeleted: res.data.isDeleted }));
   };
 
   const createPostImageContext = async (formData) => {
     const res = await postApi.createPostImage(formData);
-    console.log(res.data, "res.data");
-    // await getAllPostsInHomePage();
-    // setPostData(res.data.post);
     setAllPosts((prev) => [res.data.post, ...prev]);
   };
 
-  console.log(postData, "postData");
-
   const createPostVideoContext = async (formData) => {
     const res = await postApi.createPostVideo(formData);
-    setPostData(res.data.post);
-    // await getAllPostsInHomePage();
+    setAllPosts((prev) => [res.data.post, ...prev]);
   };
 
   // LIKES
 
   const createLike = async (postId, userId) => {
-    // console.log(postId);
     await postApi.likePost(postId, userId);
-    // console.log(res);
     setIsClick((prev) => !prev);
   };
 
   const deleteLike = async (postId, userId) => {
-    // console.log(postId);
     await postApi.unlikePost(postId, userId);
     setIsClick((prev) => !prev);
   };

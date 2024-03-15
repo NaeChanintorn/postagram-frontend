@@ -8,9 +8,7 @@ import SearchBar from "./SearchBar";
 import { CreateModal } from "../components/Modal";
 import Dropdown from "../components/Dropdown";
 import useAuth from "../hooks/use-auth";
-import useProfile from "../features/profile/hooks/use-profile";
 import usePost from "../features/post/hooks/use-post";
-import { useEffect } from "react";
 
 export default function SideBar() {
   const [search, setSearch] = useState(false);
@@ -18,18 +16,11 @@ export default function SideBar() {
   const [dropdown, setDropdown] = useState(false);
 
   const { logout, userData } = useAuth();
-  // console.log(userData);
-  const { setIsClick, allPosts, getAllPostsInHomePage, isClick } = usePost();
-
-  console.log(allPosts);
+  const { setIsClick } = usePost();
 
   const handleOpenSearchBar = () => {
     setSearch(!search);
   };
-
-  // useEffect(() => {
-  //   getAllPostsInHomePage();
-  // }, [isClick]);
 
   return (
     <>
