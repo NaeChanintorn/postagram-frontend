@@ -13,10 +13,12 @@ export default function PostContextProvider({ children }) {
   const [isClick, setIsClick] = useState(false);
   const [loading, setLoading] = useState(false);
 
+  console.log(allPosts, "allPostsContext");
+
   const getAllPostsInHomePage = async () => {
     try {
       const res = await postApi.getAllPosts();
-      console.log(res.data.posts, "context");
+      // console.log(res.data.posts, "context");
       setAllPosts(res.data.posts);
     } catch (error) {
       console.log(error);
@@ -38,10 +40,13 @@ export default function PostContextProvider({ children }) {
 
   const createPostImageContext = async (formData) => {
     const res = await postApi.createPostImage(formData);
-    // console.log(res.data);
+    console.log(res.data, "res.data");
     // await getAllPostsInHomePage();
-    setPostData(res.data.post);
+    // setPostData(res.data.post);
+    setAllPosts((prev) => [res.data.post, ...prev]);
   };
+
+  console.log(postData, "postData");
 
   const createPostVideoContext = async (formData) => {
     const res = await postApi.createPostVideo(formData);

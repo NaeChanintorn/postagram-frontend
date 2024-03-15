@@ -52,7 +52,6 @@ export function CreateModal({ onClose }) {
       // console.log(file);
       setLoading(true);
       await createPostFile();
-      await getAllPostsInHomePage();
       setIsClick((prev) => !prev);
       toast.success("post success");
       // reload();

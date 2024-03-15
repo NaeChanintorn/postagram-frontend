@@ -15,6 +15,7 @@ export default function HomePage() {
   const [onClick, setOnClick] = useState(false);
   const { getAllPostsInHomePage, allPosts, setIsClick, isClick } = usePost();
 
+  console.log(allPosts, "HOmeeeeeeeeeeeee");
   // console.log(suggested);
 
   // useEffect(() => {
@@ -59,9 +60,8 @@ export default function HomePage() {
       <div className="flex flex-col gap-3 mt-5">
         <PostRender setOnClick={setIsClick} isClick={isClick} />
       </div>
-      {/* Profile and Suggested Users */}
+
       <div className="w-[30vw] mt-10 flex flex-col gap-8">
-        {/*  ME */}
         <SuggestedProfile
           profileImage={userData?.profileImage}
           id={userData?.id}
@@ -72,10 +72,9 @@ export default function HomePage() {
         <h1 className="text-sm text-gray-500 font-medium ">
           {onClick}Suggested for you
         </h1>
-        {/* Suggested Users */}
+
         <div className="flex flex-col gap-5">{suggestedRender}</div>
       </div>
-      {/* ------------------------------ */}
     </div>
   );
 }

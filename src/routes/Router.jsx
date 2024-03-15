@@ -9,7 +9,6 @@ import ProtectedRoute from "../features/auth/paths/ProtectedRoute";
 import SetOutlet from "../components/SetOutlet";
 import ProfileContextProvider from "../features/profile/contexts/ProfileContext";
 import PostContextProvider from "../features/post/contexts/PostContext";
-import PostPage from "../pages/Postpage";
 
 const router = createBrowserRouter([
   {
@@ -33,36 +32,28 @@ const router = createBrowserRouter([
 
     element: (
       <ProtectedRoute>
-        <PostContextProvider>
-          <SetOutlet />
-        </PostContextProvider>
+        {/* <PostContextProvider> */}
+        <SetOutlet />
+        {/* </PostContextProvider> */}
       </ProtectedRoute>
     ),
     children: [
       {
         path: "",
         element: (
-          <PostContextProvider>
-            <HomePage />
-          </PostContextProvider>
+          // <PostContextProvider>
+          <HomePage />
+          // </PostContextProvider>
         ),
       },
       {
         path: "profile/:userId",
         element: (
-          <PostContextProvider>
-            <ProfileContextProvider>
-              <ProfilePage />
-            </ProfileContextProvider>
-          </PostContextProvider>
-        ),
-      },
-      {
-        path: "/post/:userId/:postId",
-        element: (
+          // <PostContextProvider>
           <ProfileContextProvider>
-            <PostPage />
+            <ProfilePage />
           </ProfileContextProvider>
+          // </PostContextProvider>
         ),
       },
     ],

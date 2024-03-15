@@ -12,6 +12,9 @@ export default function ButtonInPost({ like, postId }) {
   const { createLike, deleteLike } = usePost();
 
   const checkIsLike = like.filter((el) => +el.userId === +userData?.id);
+
+  // console.log(checkIsLike, "checkIsLike");
+
   // console.log(checkIsLike?.[0]?.postId, "----------------------");
 
   const onLike = async () => {
